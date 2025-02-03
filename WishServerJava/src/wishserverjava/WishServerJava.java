@@ -1,11 +1,12 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
+package wishserverjava   ;
 
-package wishserverjava;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import org.json.JSONObject;
 /**
  *
  * @author mohamedhekal
@@ -26,4 +27,3 @@ public class WishServerJava {
     }
     
 }
-

@@ -4,9 +4,9 @@
  */
 package wishserverjava;
 
+import wishserverjava.DBO.signup;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.ParseException;
 import java.util.logging.Level;
@@ -33,30 +33,47 @@ public class HandlingRequest extends Thread {
     }
     
     public void run(){
-        try {
-            String data = inputData.readLine();
+        
             try {
-                jsonObject = new JSONObject(data);
-            } catch (JSONException ex) {
-                Logger.getLogger(HandlingRequest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println(jsonObject.toString());
-            signup su = new signup();
-            try {
+                
+                String data = inputData.readLine();
                 try {
-                    su.signUser(jsonObject);
+                    jsonObject = new JSONObject(data);
                 } catch (JSONException ex) {
                     Logger.getLogger(HandlingRequest.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (ParseException ex) {
-                System.out.println("error in signup");
-                Logger.getLogger(HandlingRequest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            inputData.close();
-
-         
-//        System.out.println(jsonObject.getInt("ID"));
-        } catch (IOException ex) {
+                System.out.println(jsonObject.toString());
+                
+                try {
+                    switch (jsonObject.getString("Command")) {
+                        case "Signup":
+                            signup su = new signup();
+                            {
+                                try {
+                                    su.signUser(jsonObject);
+                                } catch (ParseException ex) {
+                                    Logger.getLogger(HandlingRequest.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                            break;
+                            
+                        default:
+                            System.out.println("not sign up");;
+                    }
+                } catch (JSONException ex) {
+                    Logger.getLogger(HandlingRequest.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                try {
+                    
+                    
+                    inputData.close();
+                    
+                  
+                } catch (IOException ex) {
+                    Logger.getLogger(HandlingRequest.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (IOException ex) {
             Logger.getLogger(HandlingRequest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

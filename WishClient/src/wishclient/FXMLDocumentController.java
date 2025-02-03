@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,53 +62,50 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void SignupAction(ActionEvent event) throws JsonProcessingException {
+          person = new Person(ID.getText(),
+                                Fname.getText(),
+                                Lname.getText(),
+                                password.getText(),
+                                gender.getText(),
+                                birthDate.getText(),
+                                phone.getText());
+          
+          
+        // Convert Person object to JSON
+            
+            jsonObject = new JSONObject(person);
+        try {
+            jsonObject.put("Command", "Signup");
+            
+//        jsonObject.put("userName", person.getUserName());
+//        jsonObject.put("FirstName", person.getFirstName());
+//        jsonObject.put("LastName", person.getLastName());
+//        jsonObject.put("Password", person.getPassword());
+//        jsonObject.put("gender", person.getGender());
+//        jsonObject.put("BirthDate", person.getBirthDate());
+//        jsonObject.put("phone", person.getPhone());
+        } catch (JSONException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+
         
-         try {
-             
-             String s_username = ID.getText();
-             String s_firstname = Fname.getText();
-             String s_lastname = Lname.getText();
-             String s_password = password.getText();
-             String s_gender = gender.getText();
-             String s_birthdate = birthDate.getText();
-             String s_phone = phone.getText();
-             
-             Person person = new Person(s_username, s_firstname,s_lastname,s_password,s_gender,s_birthdate,s_phone);
-             
-             // Convert Person object to JSON
-             jsonObject = new JSONObject();
-             jsonObject.put("userName", person.getUserName());
-             jsonObject.put("FirstName", person.getFirstName());
-             jsonObject.put("LastName", person.getLastName());
-             jsonObject.put("Password", person.getPassword());
-             jsonObject.put("gender", person.getGender());
-             jsonObject.put("BirthDate", person.getBirthDate());
-             jsonObject.put("phone", person.getPhone());
-             
-             
-             
-             
-             // Print the JSON string
-             
+
+        // Print the JSON string
+        
 //        jsonString = jsonObject.toString();
 //        System.out.println("JSON String: " + jsonString);
-
-try {
-    
-    server = new Socket("127.0.0.1",5555);
-    inputData = new DataInputStream(server.getInputStream());
-    outputData = new PrintStream(server.getOutputStream());
-    outputData.println(jsonObject);
-    
-}catch (ConnectException e) {
-    System.out.println("Connection failed: Server might be down.");
-} catch (IOException ex) {
-    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-}
-
-
-         }catch (JSONException ex) {
+        
+         try {
+           
+            server = new Socket("127.0.0.1",5555);
+            inputData = new DataInputStream(server.getInputStream());
+            outputData = new PrintStream(server.getOutputStream());
+            outputData.println(jsonObject);
+            
+        }catch (ConnectException e) {
+            System.out.println("Connection failed: Server might be down.");
+        } catch (IOException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         } 
          

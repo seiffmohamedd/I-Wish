@@ -4,8 +4,6 @@
  */
 package wishclient.dbo;
 
-import java.util.Date;
-
 /**
  *
  * @author mohamedhekal
@@ -42,7 +40,7 @@ public class Person {
         this.birthDate = birthDate;
         this.phone = phone;
     }
-
+    
    
 
     public String getUserName() {
