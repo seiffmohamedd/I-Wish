@@ -11,4 +11,7 @@ GRANT CREATE MATERIALIZED VIEW,
       CREATE VIEW
   TO iwish;
 
+-- connect as sysdba and grant to the iwish user the dba priv
+grant dba to iwish;
+
 ALTER USER iwish QUOTA UNLIMITED ON USERS;

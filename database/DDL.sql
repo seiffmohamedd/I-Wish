@@ -5,17 +5,32 @@ CREATE TABLE Item (
     itemDescription CLOB
 );
 
+CREATE SEQUENCE person_seq START WITH 1 INCREMENT BY 1;
+
 CREATE TABLE Person (
-    userName VARCHAR(20) PRIMARY KEY,
-    firstName VARCHAR(20),
-    lastName VARCHAR(20),
-    gender VARCHAR(6),
-    password VARCHAR(20),
+    userName VARCHAR2(20) PRIMARY KEY,
+    firstName VARCHAR2(20),
+    lastName VARCHAR2(20),
+    gender VARCHAR2(6),
+    password VARCHAR2(20),
     birthdate DATE,
-    phone VARCHAR(15),
-    points NUMBER(8,2) default 0,
-    wishListID INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1)
+    phone VARCHAR2(15),
+    points NUMBER(8,2) DEFAULT 0,
+    wishListID NUMBER
 );
+
+
+
+
+CREATE OR REPLACE TRIGGER person_trigger
+BEFORE INSERT ON Person
+FOR EACH ROW
+BEGIN
+    :NEW.wishListID := person_seq.NEXTVAL;
+END;
+
+
+
 
 CREATE TABLE wishListItem (
     userName VARCHAR(20),
@@ -26,6 +41,7 @@ CREATE TABLE wishListItem (
     FOREIGN KEY (itemID) REFERENCES Item(itemID) ON DELETE CASCADE
 );
 
+
 CREATE TABLE personFriends (
     personUserName VARCHAR(20),
     friendUserName VARCHAR(20),
@@ -35,6 +51,7 @@ CREATE TABLE personFriends (
     FOREIGN KEY (personUserName) REFERENCES Person(userName) ON DELETE CASCADE,
     FOREIGN KEY (friendUserName) REFERENCES Person(userName) ON DELETE CASCADE
 );
+
 
 CREATE TABLE wishListItemContribute (
     userName VARCHAR(20),
@@ -47,6 +64,7 @@ CREATE TABLE wishListItemContribute (
     FOREIGN KEY (friendUserName) REFERENCES Person(userName) ON DELETE CASCADE
 );
 
+
 CREATE TABLE CreditCard (
     creditCardNumber VARCHAR(16) PRIMARY KEY,
     CVV INT,
@@ -56,11 +74,23 @@ CREATE TABLE CreditCard (
     FOREIGN KEY (userName) REFERENCES Person(userName) ON DELETE CASCADE
 );
 
+
+CREATE SEQUENCE notification_seq START WITH 1 INCREMENT BY 1;
+
+
 CREATE TABLE Notification (
-    notificationID INT GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    notificationID NUMBER,
     timeStamp TIMESTAMP,
-    userName VARCHAR(20),
+    userName VARCHAR2(20),
     PRIMARY KEY (notificationID),
     FOREIGN KEY (userName) REFERENCES Person(userName) ON DELETE CASCADE
 );
+
+
+CREATE OR REPLACE TRIGGER notification_trigger
+BEFORE INSERT ON Notification
+FOR EACH ROW
+BEGIN
+    :NEW.notificationID := notification_seq.NEXTVAL;
+END;
 
