@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import org.json.JSONObject;
 
@@ -62,26 +61,27 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void SignupAction(ActionEvent event) throws JsonProcessingException {
-        
-          String s_username = ID.getText();
-          String s_firstname = Fname.getText();
-          String s_lastname = Lname.getText();
-          String s_password = password.getText();
-          String s_gender = gender.getText();
-          String s_birthdate = birthDate.getText();
-          String s_phone = phone.getText();
-        
-        Person person = new Person(s_username, s_firstname,s_lastname,s_password,s_gender,s_birthdate,s_phone);
-
+          person = new Person(ID.getText(),
+                                Fname.getText(),
+                                Lname.getText(),
+                                password.getText(),
+                                gender.getText(),
+                                birthDate.getText(),
+                                phone.getText());
+          
+          
         // Convert Person object to JSON
-        jsonObject = new JSONObject();
-        jsonObject.put("userName", person.getUserName());
-        jsonObject.put("FirstName", person.getFirstName());
-        jsonObject.put("LastName", person.getLastName());
-        jsonObject.put("Password", person.getPassword());
-        jsonObject.put("gender", person.getGender());
-        jsonObject.put("BirthDate", person.getBirthDate());
-        jsonObject.put("phone", person.getPhone());
+            
+            jsonObject = new JSONObject(person);
+            jsonObject.put("Command", "Signup");
+            
+//        jsonObject.put("userName", person.getUserName());
+//        jsonObject.put("FirstName", person.getFirstName());
+//        jsonObject.put("LastName", person.getLastName());
+//        jsonObject.put("Password", person.getPassword());
+//        jsonObject.put("gender", person.getGender());
+//        jsonObject.put("BirthDate", person.getBirthDate());
+//        jsonObject.put("phone", person.getPhone());
         
 
         
