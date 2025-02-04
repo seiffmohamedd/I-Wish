@@ -16,8 +16,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,57 +65,82 @@ public class FXMLDocumentController implements Initializable {
     Person person;
     JSONObject jsonObject;
     String jsonString;
+    
+    @FXML
+     public void handleBackAction(ActionEvent event) {
+        try {
+            Parent loginView = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
+            Scene loginScene = new Scene(loginView);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(loginScene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     private void SignupAction(ActionEvent event) throws JsonProcessingException {
-          person = new Person(ID.getText(),
-                                Fname.getText(),
-                                Lname.getText(),
-                                password.getText(),
-                                gender.getText(),
-                                birthDate.getText(),
-                                phone.getText());
-          
-          
-        // Convert Person object to JSON
-            
-            jsonObject = new JSONObject(person);
+        if (ID.getText().isEmpty() || Fname.getText().isEmpty() || Lname.getText().isEmpty() || 
+            password.getText().isEmpty() || gender.getText().isEmpty() || birthDate.getText().isEmpty() || phone.getText().isEmpty()) {
+            Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
+            aboutDialog.setTitle("Empty Fields");
+            aboutDialog.setContentText("Signup Failed, All fields are required!");
+            aboutDialog.showAndWait();
+            return;
+        }
+
+        person = new Person(ID.getText(), Fname.getText(), Lname.getText(), password.getText(), gender.getText(), birthDate.getText(), phone.getText());
+
+        jsonObject = new JSONObject(person);
         try {
             jsonObject.put("Command", "Signup");
-            
-//        jsonObject.put("userName", person.getUserName());
-//        jsonObject.put("FirstName", person.getFirstName());
-//        jsonObject.put("LastName", person.getLastName());
-//        jsonObject.put("Password", person.getPassword());
-//        jsonObject.put("gender", person.getGender());
-//        jsonObject.put("BirthDate", person.getBirthDate());
-//        jsonObject.put("phone", person.getPhone());
         } catch (JSONException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
 
-        
-
-        // Print the JSON string
-        
-//        jsonString = jsonObject.toString();
-//        System.out.println("JSON String: " + jsonString);
-        
-         try {
-           
-            server = new Socket("127.0.0.1",5555);
+        try {
+            server = new Socket("127.0.0.1", 5555);
             inputData = new DataInputStream(server.getInputStream());
             outputData = new PrintStream(server.getOutputStream());
-            outputData.println(jsonObject);
-            
-        }catch (ConnectException e) {
-            System.out.println("Connection failed: Server might be down.");
-        } catch (IOException ex) {
+
+            outputData.println(jsonObject.toString());
+
+            String response = inputData.readLine();
+            JSONObject jsonResponse = new JSONObject(response);
+
+//            if (jsonResponse.getString("status").equals("username_exists")) {
+//                Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
+//                aboutDialog.setTitle("Signup Failed");
+//                aboutDialog.setContentText("Username already exists!");
+//                aboutDialog.showAndWait();
+//            } else
+                if (jsonResponse.getString("status").equals("success")) {
+                Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
+                aboutDialog.setTitle("Success");
+                aboutDialog.setContentText("Signup successful! Redirecting to login...");
+                aboutDialog.showAndWait();
+                try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginView.fxml"));
+                Parent root = loader.load();
+                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException ex) {
+                Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            }
+
+        } catch (ConnectException e) {
+            Alert aboutDialog = new Alert(Alert.AlertType.ERROR);
+            aboutDialog.setTitle("Connection Failed");
+            aboutDialog.setContentText("Server might be down. Please try again later.");
+            aboutDialog.showAndWait();
+        } catch (IOException | JSONException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-         
-    
+        }
     }
     
    
