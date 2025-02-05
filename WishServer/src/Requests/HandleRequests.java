@@ -42,10 +42,11 @@ public class HandleRequests {
         return HandlingResult;
     }
 
-    public ArrayList<WishList> getUserWishListItems() {
+   /* public ArrayList<WishList> getUserWishListItems() {
 //        JSONObject jsonobject = new JSONObject(WLI);
         return WLI;
-    }
+    }*/
+    
     
     
     
@@ -89,7 +90,7 @@ public class HandleRequests {
                 }
                 break;
 
-            case "getWishList":
+           /* case "getWishList":
                 WishListItem WL = new WishListItem(UserName);
 //                       System.out.println("data is Stored in database");
                 WLI =  WL.getUserWishListItemsArr();
@@ -103,6 +104,7 @@ public class HandleRequests {
                         break;
                 }
                 break;
+*/
 
                 
         }

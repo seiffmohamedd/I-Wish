@@ -41,9 +41,9 @@ public class ReceiveRequests extends Thread{
             try {
                 userRequest = new HandleRequests(jsonObject);
 //                System.out.println("the user request is handeled");
-                if("getWishList".equals(userRequest.getCommand()))
+                /*if("getWishList".equals(userRequest.getCommand()))
                     DOS.println(userRequest.getUserWishListItems());
-                else
+                else*/
                     DOS.println(userRequest.getHandlingResult());
                 
             } catch (SQLException ex) {
