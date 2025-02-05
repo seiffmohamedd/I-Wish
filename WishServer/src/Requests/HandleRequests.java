@@ -5,9 +5,11 @@
  */
 package Requests;
 
+import DAL.FriendsList;
 import DAL.Login;
 import DAL.SignUp;
 import DAL.WishListItem;
+import DBO.Friends;
 import org.json.JSONException;
 import org.json.JSONObject;
 import DBO.User;
@@ -15,6 +17,7 @@ import DBO.WishList;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import org.json.JSONArray;
 
 /**
  *
@@ -103,8 +106,41 @@ public class HandleRequests {
                         break;
                 }
                 break;
+                
+            case "getFriendsList":
+            System.out.println("Handling 'getFriendsList' request for user: " + UserName);
 
-      
+            FriendsList friendsList = new FriendsList(UserName);
+    
+            if (friendsList == null) {
+                    System.out.println("FriendsList object is NULL!");
+                } else {
+                    System.out.println("FriendsList object created successfully.");
+                }
+
+                ArrayList<Friends> friends = friendsList.getUserFriendsList();
+                if (friends.isEmpty()) {
+                    System.out.println("User friends list is empty.");
+                }
+
+                JSONObject friendsResponse = new JSONObject();
+                JSONArray friendsArray = new JSONArray();
+
+                if (friendsList.getExecuteResult() == 1) {
+                    HandlingResult = "Success";
+                    for (Friends friend : friends) {
+                        friendsArray.put(friend.getFriendUserName());
+                    }
+                    friendsResponse.put("friends", friendsArray);
+                } else {
+                    HandlingResult = "Fail";
+                    friendsResponse.put("friends", new JSONArray());
+                }
+
+                System.out.println("Sending friends list to client: " + friendsResponse.toString());
+                break;
+
+
 
                 
         }
