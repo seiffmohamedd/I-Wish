@@ -92,7 +92,7 @@ public class LoginViewController implements Initializable {
     private void profileView(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ProfileView.fxml"));
-            Parent root = loader.load();
+            Parent root = loader.load();     
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

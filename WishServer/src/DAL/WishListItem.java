@@ -22,7 +22,7 @@ public class WishListItem {
     private final String query = "select w.remaining, I.ITEMNAME,I.ITEMPRICE, I.ITEMDESCRIPTION from wishlistitem w, item i where w.ITEMID = i.ITEMID and w.userName =  ?";
     private int executeResult;
     private String UserName;
-    private ArrayList<WishList> userWishListItemsArr;
+    private ArrayList<WishList> userWishListItemsArr = new ArrayList<>();
     public WishListItem(String UserName) throws SQLException{
         DBCon = establishConnection();
         this.UserName = UserName;

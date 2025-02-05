@@ -24,7 +24,7 @@ public class HandleRequests {
     private JSONObject userRequest;
     private String Command;
     private String HandlingResult;
-    private String UserName;
+    private static String UserName;
     private ArrayList<WishList> WLI;
     public HandleRequests(JSONObject userRequest ) throws JSONException, SQLException, ParseException{
         this.userRequest = userRequest;
@@ -42,10 +42,10 @@ public class HandleRequests {
         return HandlingResult;
     }
 
-   /* public ArrayList<WishList> getUserWishListItems() {
+    public ArrayList<WishList> getUserWishListItems() {
 //        JSONObject jsonobject = new JSONObject(WLI);
         return WLI;
-    }*/
+    }
     
     
     
@@ -90,11 +90,10 @@ public class HandleRequests {
                 }
                 break;
 
-           /* case "getWishList":
+            case "getWishList":
                 WishListItem WL = new WishListItem(UserName);
 //                       System.out.println("data is Stored in database");
                 WLI =  WL.getUserWishListItemsArr();
-                System.out.println("the WLIs name for the user : "+ WLI.get(0));
                 switch (WL.getExecuteResult()) {
                     case 1:
                         HandlingResult = "Success";
@@ -104,7 +103,8 @@ public class HandleRequests {
                         break;
                 }
                 break;
-*/
+
+      
 
                 
         }
