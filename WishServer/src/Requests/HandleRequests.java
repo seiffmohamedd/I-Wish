@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Requests;
 
 import DAL.FriendsList;
@@ -17,7 +12,6 @@ import DBO.WishList;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import org.json.JSONArray;
 
 /**
  *
@@ -29,14 +23,15 @@ public class HandleRequests {
     private String HandlingResult;
     private static String UserName;
     private ArrayList<WishList> WLI;
-    public HandleRequests(JSONObject userRequest ) throws JSONException, SQLException, ParseException{
+    private ArrayList<Friends> friendsList; // Added friends list
+
+    public HandleRequests(JSONObject userRequest) throws JSONException, SQLException, ParseException {
         this.userRequest = userRequest;
         getCommand();
-//        System.out.println("get the command and it was : "+ Command);
         executeRequest();
     }
-    
-    public String getCommand() throws JSONException{
+
+    public String getCommand() throws JSONException {
         Command = userRequest.getString("Command");    
         return Command;
     }
@@ -46,23 +41,20 @@ public class HandleRequests {
     }
 
     public ArrayList<WishList> getUserWishListItems() {
-//        JSONObject jsonobject = new JSONObject(WLI);
         return WLI;
     }
-    
-    
-    
-    
-    
-    public void executeRequest() throws JSONException, SQLException, ParseException{
+
+    public ArrayList<Friends> getUserFriendsList() { // Added getter for friends list
+        return friendsList;
+    }
+
+    public void executeRequest() throws JSONException, SQLException, ParseException {
         User user;
-        
+
         switch (Command) {
             case "Signup":
                 user = new User(userRequest);
-//                       System.out.println("Store the data in user Object");
                 SignUp SU = new SignUp(user);
-//                       System.out.println("data is Stored in database");
                 switch (SU.getExecuteResult()) {
                     case 1:
                         HandlingResult = "Success";
@@ -74,15 +66,12 @@ public class HandleRequests {
                         HandlingResult = "Fail";
                         break;
                 }
-
                 break;
-            
+
             case "Login":
                 user = new User(userRequest);
-                UserName= user.getUserName();
-//                       System.out.println("Store the data in user Object");
+                UserName = user.getUserName();
                 Login LI = new Login(user);
-//                       System.out.println("data is Stored in database");
                 switch (LI.getExecuteResult()) {
                     case 1:
                         HandlingResult = "Success";
@@ -95,8 +84,7 @@ public class HandleRequests {
 
             case "getWishList":
                 WishListItem WL = new WishListItem(UserName);
-//                       System.out.println("data is Stored in database");
-                WLI =  WL.getUserWishListItemsArr();
+                WLI = WL.getUserWishListItemsArr();
                 switch (WL.getExecuteResult()) {
                     case 1:
                         HandlingResult = "Success";
@@ -106,45 +94,19 @@ public class HandleRequests {
                         break;
                 }
                 break;
-                
+
             case "getFriendsList":
-            System.out.println("Handling 'getFriendsList' request for user: " + UserName);
-
-            FriendsList friendsList = new FriendsList(UserName);
-    
-            if (friendsList == null) {
-                    System.out.println("FriendsList object is NULL!");
-                } else {
-                    System.out.println("FriendsList object created successfully.");
+                FriendsList FL = new FriendsList(UserName);
+                friendsList = FL.getUserFriendsListArr(); 
+                switch (FL.getExecuteResult()) {
+                    case 1:
+                        HandlingResult = "Success";
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break;
                 }
-
-                ArrayList<Friends> friends = friendsList.getUserFriendsList();
-                if (friends.isEmpty()) {
-                    System.out.println("User friends list is empty.");
-                }
-
-                JSONObject friendsResponse = new JSONObject();
-                JSONArray friendsArray = new JSONArray();
-
-                if (friendsList.getExecuteResult() == 1) {
-                    HandlingResult = "Success";
-                    for (Friends friend : friends) {
-                        friendsArray.put(friend.getFriendUserName());
-                    }
-                    friendsResponse.put("friends", friendsArray);
-                } else {
-                    HandlingResult = "Fail";
-                    friendsResponse.put("friends", new JSONArray());
-                }
-
-                System.out.println("Sending friends list to client: " + friendsResponse.toString());
                 break;
-
-
-
-                
         }
-    
-}
-
+    }
 }

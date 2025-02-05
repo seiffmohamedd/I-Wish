@@ -9,61 +9,44 @@ import java.util.ArrayList;
 
 public class FriendsList {
     private final Connection DBCon;
-    private final String query = "SELECT FRIENDUSERNAME FROM FRIENDS WHERE PERSONUSERNAME = ? AND STATUS = 'Accepted'";
+    private final String query = "SELECT FRIENDUSERNAME FROM PERSONFRIENDS WHERE PERSONUSERNAME = ? AND STATUS = 'Accepted'";
     private int executeResult;
     private String userName;
-    private ArrayList<Friends> userFriendsList;
+    private ArrayList<Friends> userFriendsListArr = new ArrayList<>(); // Renamed to match WishListItem naming
 
     public FriendsList(String userName) throws SQLException {
-        DBCon = establishConnection();  
+        DBCon = establishConnection();
         this.userName = userName;
-        this.userFriendsList = new ArrayList<>();  
-
         System.out.println("Fetching friends list for user: " + userName);
-        getFriends(); 
+        getFriends();
     }
-    
+
     private Connection establishConnection() throws SQLException {
-        System.out.println("Establishing connection to the database...");
         return new DBConnection().getConection();
     }
-    
+
     public int getExecuteResult() {
         return executeResult;
     }
 
-    public ArrayList<Friends> getUserFriendsList() {
-        return userFriendsList;
+    public ArrayList<Friends> getUserFriendsListArr() { // Renamed method to match WishListItem
+        return userFriendsListArr;
     }
 
-   private void getFriends() throws SQLException {
-    System.out.println("Executing query to fetch friends list: " + query);
+    private void getFriends() throws SQLException {
+        PreparedStatement statement = DBCon.prepareStatement(query);
+        statement.setString(1, userName);
+        ResultSet rs = statement.executeQuery();
 
-    PreparedStatement statement = DBCon.prepareStatement(query);
-    statement.setString(1, userName);
+        while (rs.next()) {
+            Friends tempFriend = new Friends(userName, rs.getString("FRIENDUSERNAME"));
+            System.out.println("Friend found: " + tempFriend.getFriendUserName());
+            userFriendsListArr.add(tempFriend);
+            executeResult = 1;
+        }
 
-    System.out.println("Query parameter (userName): " + userName);
-
-    ResultSet rs = statement.executeQuery();
-
-    int resultCount = 0;
-    
-    userFriendsList.clear();
-    
-    while (rs.next()) {  
-        resultCount++;
-        Friends friend = new Friends(userName, rs.getString("FRIENDUSERNAME"));
-        userFriendsList.add(friend);
-        System.out.println("Friend added: " + friend.getFriendUserName());
+        if (userFriendsListArr.isEmpty()) {
+            executeResult = 0;
+        }
     }
-
-    if (resultCount == 0) {
-        System.out.println("No friends found for user: " + userName);
-        executeResult = 0;
-    } else {
-        executeResult = 1;
-        System.out.println("Total friends found: " + resultCount);
-    }
-}
-
 }

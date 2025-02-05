@@ -1,8 +1,10 @@
 package DBO;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Friends {
+
+public class Friends implements Serializable {
     private String personUserName;
     private String friendUserName;
     private Timestamp timestamp;
@@ -50,5 +52,15 @@ public class Friends {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Friends{" +
+                "personUserName='" + personUserName + '\'' +
+                ", friendUserName='" + friendUserName + '\'' +
+                ", timestamp=" + timestamp +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

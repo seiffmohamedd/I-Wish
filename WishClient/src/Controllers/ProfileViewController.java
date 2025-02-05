@@ -96,7 +96,6 @@ public class ProfileViewController implements Initializable {
     }    
     
     
-    // Function to parse input string and update TableView
     public void updateTableFromString(String input) {
         
         ItemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
