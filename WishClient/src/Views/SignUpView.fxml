@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SignUpViewController">
+  <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="60.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="146.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="419.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="78.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints />
+  </rowConstraints>
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="ID" GridPane.columnIndex="1" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="FirstName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="LastName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button alignment="CENTER" mnemonicParsing="false" onAction="#SignupAction" prefHeight="26.0" prefWidth="393.0" text="sign up" GridPane.columnIndex="2" GridPane.rowIndex="7">
+         <GridPane.margin>
+            <Insets left="200.0" right="100.0" />
+         </GridPane.margin></Button>
+      <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="26.0" prefWidth="100.0" text="Back" GridPane.columnIndex="2" GridPane.rowIndex="7">
+         <GridPane.margin>
+            <Insets left="20.0" />
+         </GridPane.margin></Button>
+      <TextField fx:id="ID" GridPane.columnIndex="2" />
+      <TextField fx:id="Fname" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <TextField fx:id="Lname" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="Gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="Birth Date" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="155.0" text="phone" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <TextField fx:id="password" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <TextField fx:id="gender" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <TextField fx:id="phone" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <TextField fx:id="birthDate" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+   </children>
+</GridPane>

@@ -2,17 +2,14 @@
 <jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="WishClient.jnlp">
   <information>
     <title>WishClient</title>
-    <vendor>Lenovo</vendor>
+    <vendor>Windo</vendor>
     <description>null</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="WishClient.jar" size="9976" download="eager" />
+    <jar href="WishClient.jar" size="15319" download="eager" />
     <jar href="lib\com.fasterxml.jackson.core.jar" size="206234" download="eager" />
-    <jar href="lib\derby.jar" size="2766479" download="eager" />
-    <jar href="lib\derbyclient.jar" size="576624" download="eager" />
-    <jar href="lib\derbynet.jar" size="248898" download="eager" />
     <jar href="lib\jackson-annotations-2.1.2.jar" size="34474" download="eager" />
     <jar href="lib\ojdbc7.jar" size="3397734" download="eager" />
     <jar href="lib\org.json.jar" size="48796" download="eager" />
@@ -21,6 +18,6 @@
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="WishClient" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="WishClient.WishClient"  name="WishClient" />
+  <jfx:javafx-desc  width="800" height="600" main-class="wishclient.WishClient"  name="WishClient" />
   <update check="always"/>
 </jnlp>
