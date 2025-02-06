@@ -12,7 +12,7 @@ public class FriendsList {
     private final String query = "SELECT FRIENDUSERNAME FROM PERSONFRIENDS WHERE PERSONUSERNAME = ? AND STATUS = 'Accepted'";
     private int executeResult;
     private String userName;
-    private ArrayList<Friends> userFriendsListArr = new ArrayList<>(); // Renamed to match WishListItem naming
+    private ArrayList<Friends> userFriendsListArr = new ArrayList<>();
 
     public FriendsList(String userName) throws SQLException {
         DBCon = establishConnection();
@@ -29,7 +29,7 @@ public class FriendsList {
         return executeResult;
     }
 
-    public ArrayList<Friends> getUserFriendsListArr() { // Renamed method to match WishListItem
+    public ArrayList<Friends> getUserFriendsListArr() {
         return userFriendsListArr;
     }
 

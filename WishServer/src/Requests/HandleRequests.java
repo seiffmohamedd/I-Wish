@@ -13,17 +13,13 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-/**
- *
- * @author hekal
- */
 public class HandleRequests {
     private JSONObject userRequest;
     private String Command;
     private String HandlingResult;
     private static String UserName;
     private ArrayList<WishList> WLI;
-    private ArrayList<Friends> friendsList; // Added friends list
+    private ArrayList<Friends> friendsList; 
 
     public HandleRequests(JSONObject userRequest) throws JSONException, SQLException, ParseException {
         this.userRequest = userRequest;
@@ -44,7 +40,7 @@ public class HandleRequests {
         return WLI;
     }
 
-    public ArrayList<Friends> getUserFriendsList() { // Added getter for friends list
+    public ArrayList<Friends> getUserFriendsList() { 
         return friendsList;
     }
 
@@ -87,7 +83,7 @@ public class HandleRequests {
                 WLI = WL.getUserWishListItemsArr();
                 switch (WL.getExecuteResult()) {
                     case 1:
-                        HandlingResult = "Success";
+                        HandlingResult = WLI.toString(); // Return the actual wish list
                         break;
                     case 0:
                         HandlingResult = "Fail";
@@ -97,10 +93,10 @@ public class HandleRequests {
 
             case "getFriendsList":
                 FriendsList FL = new FriendsList(UserName);
-                friendsList = FL.getUserFriendsListArr(); 
+                friendsList = FL.getUserFriendsListArr();
                 switch (FL.getExecuteResult()) {
                     case 1:
-                        HandlingResult = "Success";
+                        HandlingResult = friendsList.toString(); 
                         break;
                     case 0:
                         HandlingResult = "Fail";
