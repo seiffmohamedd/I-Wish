@@ -23,31 +23,38 @@ public class ReceiveRequests extends Thread {
     }
 
     public void run() {
+    try {
+        String dataInDIS = DIS.readLine();
+        jsonObject = new JSONObject(dataInDIS);
+        System.out.println("Received JSON request: " + jsonObject.toString());
+
+        HandleRequests userRequest;
         try {
-            String dataInDIS = DIS.readLine();
-            jsonObject = new JSONObject(dataInDIS);
-            System.out.println(jsonObject.toString());
-
-            HandleRequests userRequest;
-            try {
-                userRequest = new HandleRequests(jsonObject);
-
-                if ("getWishList".equals(userRequest.getCommand())) {
-                    DOS.println(userRequest.getUserWishListItems());
-                } 
-                else if ("getFriendsList".equals(userRequest.getCommand())) {  
-                    DOS.println(userRequest.getUserFriendsList());  
-                } 
-                else {
-                    DOS.println(userRequest.getHandlingResult());
-                }
-
-            } catch (SQLException | ParseException ex) {
-                Logger.getLogger(ReceiveRequests.class.getName()).log(Level.SEVERE, null, ex);
+            userRequest = new HandleRequests(jsonObject);
+            
+            if ("getWishList".equals(userRequest.getCommand())) {
+                System.out.println("Wish List Response: " + userRequest.getUserWishListItems());
+                DOS.println(userRequest.getUserWishListItems());
+            } 
+            else if ("getFriendsList".equals(userRequest.getCommand())) {
+                System.out.println("Friends List Response: " + userRequest.getUserFriendsList());
+                DOS.println(userRequest.getUserFriendsList());
+            } 
+            else if ("searchUsers".equals(userRequest.getCommand())) {
+                System.out.println("User List Response: " + userRequest.getUserList());
+                DOS.println(userRequest.getUserList());
+            } 
+            else {
+                DOS.println(userRequest.getHandlingResult());
             }
 
-        } catch (IOException | JSONException ex) {
+        } catch (SQLException | ParseException ex) {
             Logger.getLogger(ReceiveRequests.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    } catch (IOException | JSONException ex) {
+        Logger.getLogger(ReceiveRequests.class.getName()).log(Level.SEVERE, null, ex);
     }
+}
+
 }

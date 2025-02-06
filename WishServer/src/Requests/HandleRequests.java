@@ -1,5 +1,6 @@
 package Requests;
 
+import DAL.AddFriend;
 import DAL.FriendsList;
 import DAL.Login;
 import DAL.SignUp;
@@ -12,6 +13,7 @@ import DBO.WishList;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import org.json.JSONArray;
 
 public class HandleRequests {
     private JSONObject userRequest;
@@ -20,6 +22,8 @@ public class HandleRequests {
     private static String UserName;
     private ArrayList<WishList> WLI;
     private ArrayList<Friends> friendsList; 
+    private ArrayList<User> userList; 
+
 
     public HandleRequests(JSONObject userRequest) throws JSONException, SQLException, ParseException {
         this.userRequest = userRequest;
@@ -42,6 +46,10 @@ public class HandleRequests {
 
     public ArrayList<Friends> getUserFriendsList() { 
         return friendsList;
+    }
+    
+    public ArrayList<User> getUserList() { 
+        return userList;
     }
 
     public void executeRequest() throws JSONException, SQLException, ParseException {
@@ -92,17 +100,32 @@ public class HandleRequests {
                 break;
 
             case "getFriendsList":
-                FriendsList FL = new FriendsList(UserName);
-                friendsList = FL.getUserFriendsListArr();
-                switch (FL.getExecuteResult()) {
-                    case 1:
-                        HandlingResult = friendsList.toString(); 
-                        break;
-                    case 0:
-                        HandlingResult = "Fail";
-                        break;
+             FriendsList FL = new FriendsList(UserName);
+             friendsList = FL.getUserFriendsListArr();
+
+             if (friendsList == null || friendsList.isEmpty()) {
+                 HandlingResult = "No friends found";
+             } else {
+                 HandlingResult = friendsList.toString();
+             }
+             break;
+             
+             case "searchUsers":
+            String searchQuery = userRequest.getString("query");  
+            AddFriend AF = new AddFriend(UserName, searchQuery);  
+            userList = AF.getUsersListArr();
+
+            if (userList == null || userList.isEmpty()) {
+                HandlingResult = "No Users found";
+            } else {
+                JSONArray userArray = new JSONArray();
+                for (User users : userList) {
+                    userArray.put(users.getUserName());  
                 }
-                break;
+                HandlingResult = userArray.toString();  
+            }
+            break;
+
         }
     }
 }

@@ -70,7 +70,7 @@ public class MyFriendsController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/profileview.fxml"));
             Parent root = loader.load();
-            Stage stage = (Stage) backButton.getScene().getWindow();
+            Stage stage = (Stage) friendsListView.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();

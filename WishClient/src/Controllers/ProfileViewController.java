@@ -106,7 +106,6 @@ public class ProfileViewController implements Initializable {
         WishListTable.setItems(wishListData);
         wishListData.clear();  // Clear existing data
 
-        // Regex to extract wish list items
         Pattern pattern = Pattern.compile(
                 "WishList\\{itemName=(.*?), itemDescription=(.*?), price=(.*?), remaining=(.*?)\\}"
         );
@@ -134,6 +133,20 @@ public class ProfileViewController implements Initializable {
             Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @FXML
+    private void handleAddButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/AddFriend.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) addbtn.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+}
+
 
 
 }
