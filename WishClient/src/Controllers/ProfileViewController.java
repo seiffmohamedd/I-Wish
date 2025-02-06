@@ -5,9 +5,12 @@
  */
 package Controllers;
 
+import BDO.Notification;
+import BDO.User;
 import BDO.WishList;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,10 +31,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import wishclient.SetSocket;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javafx.event.ActionEvent;
 /**
  * FXML Controller class
  *
@@ -54,8 +60,6 @@ public class ProfileViewController implements Initializable {
     @FXML
     private Text notificationtxt;
     @FXML
-    private ListView<?> notificationslist;
-    @FXML
     private TableColumn<WishList, String> ItemNameCol;
     @FXML
     private TableColumn <WishList, Double> ItemPriceCol;
@@ -66,24 +70,40 @@ public class ProfileViewController implements Initializable {
     @FXML
     private TableView<WishList> WishListTable;
     private ObservableList<WishList> wishListData = FXCollections.observableArrayList();
+    @FXML
+    private TableView<Notification> NotificationTable;
+    private ObservableList<Notification> notificationData = FXCollections.observableArrayList();
+
+    @FXML
+    private TableColumn<Notification, String> NotificationTextCol;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+         dg = new Dialog();
         try {
             SetSocket socket = new SetSocket();
             JSONObject getWishReq = new JSONObject();
-            getWishReq.put("Command", "getWishList");
+            getWishReq.put("Command", "GetProfileData");
 
             socket.getDOS().println(getWishReq);
-//            ArrayList<WishList> WL = (ArrayList<WishList>)socket.getDIS().readLine();
-            String data = socket.getDIS().readLine();
-
-            updateTableFromString(data);
-
-            System.out.println("this is the string array list from DIS "+data);
+            // get wish list content and view it
+            JSONArray WishList = new JSONArray (socket.getDIS().readLine());
+            System.out.println("this is wishList Json array"+WishList);
+            updateTableFrom(WishList);
+            // get Notification content and view it
+            JSONArray Notification = new JSONArray(socket.getDIS().readLine());
+            System.out.println("this is notification Json Array "+Notification);
+            updateNotificationTable(Notification);
+            // fill userName in username text field
+            JSONObject UserData = new JSONObject(socket.getDIS().readLine());
+            System.err.println("the User data is : "+ UserData);
+            username.setText(UserData.getString("userName"));
+            points.setText(UserData.getString("points"));
+            
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
@@ -95,9 +115,10 @@ public class ProfileViewController implements Initializable {
         
     }    
     
-    
-    public void updateTableFromString(String input) {
-        
+    Dialog dg;
+
+
+    public void updateTableFrom(JSONArray jsonArray) {
         ItemNameCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         DescriptionCol.setCellValueFactory(new PropertyValueFactory<>("itemDescription"));
         ItemPriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -106,20 +127,60 @@ public class ProfileViewController implements Initializable {
         WishListTable.setItems(wishListData);
         wishListData.clear();  // Clear existing data
 
-        Pattern pattern = Pattern.compile(
-                "WishList\\{itemName=(.*?), itemDescription=(.*?), price=(.*?), remaining=(.*?)\\}"
-        );
-        Matcher matcher = pattern.matcher(input);
-
-        while (matcher.find()) {
-            String itemName = matcher.group(1).trim();
-            String itemDescription = matcher.group(2).trim();
-            double price = Double.parseDouble(matcher.group(3).trim());
-            double remaining = Double.parseDouble(matcher.group(4).trim());
-
-            wishListData.add(new WishList(itemName, itemDescription, price, remaining));
+        // Iterate through JSONArray and extract objects
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                
+                String itemName = jsonObject.getString("itemName");
+                String itemDescription = jsonObject.getString("itemDescription");
+                double price = jsonObject.getDouble("price");
+                double remaining = jsonObject.getDouble("remaining");
+                
+                wishListData.add(new WishList(itemName, itemDescription, price, remaining));
+            } catch (JSONException ex) {
+                dg.showDialog("ERROR", "ERROR in data retrival", "ERROR");
+            }
         }
     }
+    
+    
+
+
+    public void updateNotificationTable(JSONArray jsonArray) {
+        // Set the column property
+        NotificationTextCol.setCellValueFactory(new PropertyValueFactory<>("notificationText"));
+
+        // Clear existing data
+        NotificationTable.setItems(notificationData);
+        notificationData.clear();
+
+        // Define date format to extract only the date
+        DateTimeFormatter dateOnlyFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Iterate through the JSONArray and extract relevant fields
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                String notificationText = jsonObject.getString("NotificationText");
+                String timestamp = jsonObject.getString("TimeStamp");
+
+                // Extract only the date part (YYYY-MM-DD)
+                String datePart = timestamp.split(" ")[0];
+
+                // Concatenate NotificationText with Date
+                String formattedText = notificationText + " - " + datePart;
+
+                // Add new Notification object to the table
+                notificationData.add(new Notification(formattedText));
+            } catch (JSONException ex) {
+                Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+}
+    
+    
    @FXML
     private void handleFriendsButton() {
         try {
@@ -145,8 +206,7 @@ public class ProfileViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-}
-
+    }
 
 
 }

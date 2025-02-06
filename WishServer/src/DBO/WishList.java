@@ -58,7 +58,12 @@ public class WishList implements Serializable{
 
     @Override
     public String toString() {
-        return "WishList{" + "itemName=" + itemName + ", itemDescription=" + itemDescription + ", price=" + price + ", remaining=" + remaining + '}';
+        return "{"
+                + "\"itemName\": \"" + itemName + "\", "
+                + "\"itemDescription\": \"" + itemDescription + "\", "
+                + "\"price\": " + price + ", "
+                + "\"remaining\": " + remaining
+                + "}";
     }
     
     

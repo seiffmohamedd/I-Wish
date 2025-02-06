@@ -15,7 +15,7 @@ import org.json.JSONObject;
  *
  * @author Windo
  */
-public class User implements Serializable {
+public class User implements Serializable{
     private String userName;
     private String firstName;
     private String lastName;
@@ -46,11 +46,24 @@ public class User implements Serializable {
         this.birthDate = birthDate;
         this.phone = phone;
     }
-
+    
     public User(String userName) {
         this.userName = userName;
     }
-
+    
+    public User(String userName, String firstName, String lastName, String password, String gender, String birthDate, String phone, int points, int wishlistID) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.points = points;
+        this.wishlistID = wishlistID;
+    }
+    
+    
     public String getUserName() {
         return userName;
     }
@@ -109,7 +122,19 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return this.userName;  
+        return "{"
+                + "\"userName\": \"" + userName + "\", "
+                + "\"firstName\": \"" + firstName + "\", "
+                + "\"lastName\": \"" + lastName + "\", "
+                + "\"password\": \"" + password + "\", "
+                + "\"gender\": \"" + gender + "\", "
+                + "\"birthDate\": \"" + birthDate + "\", "
+                + "\"phone\": \"" + phone + "\", "
+                + "\"points\": " + points + ", "
+                + "\"wishlistID\": " + wishlistID
+                + "}";
     }
+
+    
 
 }

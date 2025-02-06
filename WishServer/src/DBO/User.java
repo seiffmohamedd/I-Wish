@@ -15,7 +15,7 @@ import org.json.JSONObject;
  *
  * @author Windo
  */
-public class User implements Serializable {
+public class User implements Serializable{
     private String userName;
     private String firstName;
     private String lastName;
@@ -47,10 +47,21 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
+    public User(String userName, String firstName, String lastName, String password, String gender, String birthDate, String phone, int points, int wishlistID) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.gender = gender;
+        this.birthDate = birthDate;
+        this.phone = phone;
+        this.points = points;
+        this.wishlistID = wishlistID;
+    }
+    
     public User(String userName) {
         this.userName = userName;
     }
-
     public String getUserName() {
         return userName;
     }
@@ -106,10 +117,23 @@ public class User implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     @Override
     public String toString() {
-        return this.userName;  // This ensures it prints the username instead of object reference
+        return "{"
+                + "\"userName\": \"" + userName + "\", "
+                + "\"firstName\": \"" + firstName + "\", "
+                + "\"lastName\": \"" + lastName + "\", "
+                + "\"password\": \"" + password + "\", "
+                + "\"gender\": \"" + gender + "\", "
+                + "\"birthDate\": \"" + birthDate + "\", "
+                + "\"phone\": \"" + phone + "\", "
+                + "\"points\": " + points + ", "
+                + "\"wishlistID\": " + wishlistID
+                + "}";
     }
-
+    
+    
+    
 
 }

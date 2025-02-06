@@ -2,10 +2,12 @@ package Requests;
 
 import DAL.AddFriend;
 import DAL.FriendsList;
+import DAL.GetNotification;
 import DAL.Login;
 import DAL.SignUp;
 import DAL.WishListItem;
 import DBO.Friends;
+import DBO.Notification;
 import org.json.JSONException;
 import org.json.JSONObject;
 import DBO.User;
@@ -19,11 +21,11 @@ public class HandleRequests {
     private JSONObject userRequest;
     private String Command;
     private String HandlingResult;
-    private static String UserName;
+    private static User UserData;
     private ArrayList<WishList> WLI;
+    private ArrayList<Notification> userNotificationArr;
     private ArrayList<Friends> friendsList; 
     private ArrayList<User> userList; 
-
 
     public HandleRequests(JSONObject userRequest) throws JSONException, SQLException, ParseException {
         this.userRequest = userRequest;
@@ -31,6 +33,10 @@ public class HandleRequests {
         executeRequest();
     }
 
+    public static User getUserData() {
+        return UserData;
+    }
+    
     public String getCommand() throws JSONException {
         Command = userRequest.getString("Command");    
         return Command;
@@ -43,6 +49,11 @@ public class HandleRequests {
     public ArrayList<WishList> getUserWishListItems() {
         return WLI;
     }
+
+    public ArrayList<Notification> getUserNotificationArr() {
+        return userNotificationArr;
+    }
+    
 
     public ArrayList<Friends> getUserFriendsList() { 
         return friendsList;
@@ -74,11 +85,12 @@ public class HandleRequests {
 
             case "Login":
                 user = new User(userRequest);
-                UserName = user.getUserName();
+//                UserName = user.getUserName();
                 Login LI = new Login(user);
                 switch (LI.getExecuteResult()) {
                     case 1:
                         HandlingResult = "Success";
+                        UserData = LI.getUser();
                         break;
                     case 0:
                         HandlingResult = "Fail";
@@ -86,9 +98,11 @@ public class HandleRequests {
                 }
                 break;
 
-            case "getWishList":
-                WishListItem WL = new WishListItem(UserName);
+            case "GetProfileData":
+                WishListItem WL = new WishListItem(UserData.getUserName());
                 WLI = WL.getUserWishListItemsArr();
+                GetNotification userNotification = new GetNotification(UserData.getUserName());
+                userNotificationArr = userNotification.getUserNotificationtsArr();
                 switch (WL.getExecuteResult()) {
                     case 1:
                         HandlingResult = WLI.toString(); // Return the actual wish list
@@ -100,31 +114,31 @@ public class HandleRequests {
                 break;
 
             case "getFriendsList":
-             FriendsList FL = new FriendsList(UserName);
-             friendsList = FL.getUserFriendsListArr();
+                FriendsList FL = new FriendsList(UserData.getUserName());
+                friendsList = FL.getUserFriendsListArr();
 
-             if (friendsList == null || friendsList.isEmpty()) {
-                 HandlingResult = "No friends found";
-             } else {
-                 HandlingResult = friendsList.toString();
-             }
-             break;
-             
-             case "searchUsers":
-            String searchQuery = userRequest.getString("query");  
-            AddFriend AF = new AddFriend(UserName, searchQuery);  
-            userList = AF.getUsersListArr();
-
-            if (userList == null || userList.isEmpty()) {
-                HandlingResult = "No Users found";
-            } else {
-                JSONArray userArray = new JSONArray();
-                for (User users : userList) {
-                    userArray.put(users.getUserName());  
+                if (friendsList == null || friendsList.isEmpty()) {
+                    HandlingResult = "No friends found";
+                } else {
+                    HandlingResult = friendsList.toString();
                 }
-                HandlingResult = userArray.toString();  
-            }
-            break;
+                break;
+
+                case "searchUsers":
+               String searchQuery = userRequest.getString("query");  
+               AddFriend AF = new AddFriend(UserData.getUserName(), searchQuery);  
+               userList = AF.getUsersListArr();
+
+               if (userList == null || userList.isEmpty()) {
+                   HandlingResult = "No Users found";
+               } else {
+                   JSONArray userArray = new JSONArray();
+                   for (User users : userList) {
+                       userArray.put(users.getUserName());  
+                   }
+                   HandlingResult = userArray.toString();  
+               }
+               break;
 
         }
     }

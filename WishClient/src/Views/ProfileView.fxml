@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -13,11 +13,13 @@
    <children>
       <AnchorPane prefHeight="75.0" prefWidth="794.0" styleClass="anchor-pane" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <TextField fx:id="username" editable="false" layoutX="14.0" layoutY="23.0" prefHeight="26.0" prefWidth="146.0" promptText="user name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
-            <Button fx:id="friendbtn" layoutX="215.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="31.0" prefWidth="119.0" text="Friends" AnchorPane.topAnchor="10.0" />
-            <TextField fx:id="points" editable="false" layoutX="495.0" layoutY="23.0" prefHeight="26.0" prefWidth="123.0" promptText="Points" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0" />
-            <Button fx:id="addbtn" layoutX="360.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="31.0" prefWidth="110.0" text="Add" AnchorPane.topAnchor="10.0" />
-            <Button fx:id="requestbtn" layoutX="494.0" layoutY="22.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="125.0" text="Requests" AnchorPane.topAnchor="10.0" />
+            <TextField fx:id="username" editable="false" layoutX="14.0" layoutY="23.0" prefHeight="26.0" prefWidth="146.0" promptText="user name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
+            <Button fx:id="friendbtn" layoutX="215.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="31.0" prefWidth="119.0" text="Friends" AnchorPane.topAnchor="30.0" />
+            <TextField fx:id="points" editable="false" layoutX="495.0" layoutY="23.0" prefHeight="26.0" prefWidth="123.0" promptText="Points" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
+            <Button fx:id="addbtn" layoutX="360.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="31.0" prefWidth="110.0" text="Add" AnchorPane.topAnchor="30.0" />
+            <Button fx:id="requestbtn" layoutX="494.0" layoutY="22.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="125.0" text="Requests" AnchorPane.topAnchor="30.0" />
+            <Label layoutX="20.0" layoutY="14.0" text="User Name" AnchorPane.topAnchor="10.0" />
+            <Label layoutX="657.0" layoutY="14.0" text="Points" AnchorPane.topAnchor="10.0" />
          </children>
       </AnchorPane>
       <VBox layoutX="14.0" layoutY="75.0" prefHeight="469.0" prefWidth="518.0" styleClass="vbox" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="78.0">
@@ -37,14 +39,18 @@
             </TableView>
          </children>
       </VBox>
-      <VBox layoutX="529.0" layoutY="78.0" prefHeight="469.0" prefWidth="270.0" styleClass="vbox">
+      <VBox layoutX="529.0" layoutY="78.0" prefHeight="469.0" prefWidth="270.0" styleClass="vbox" AnchorPane.leftAnchor="529.0" AnchorPane.rightAnchor="3.0">
          <children>
             <AnchorPane prefHeight="49.0" prefWidth="297.0">
                <children>
                   <Text fx:id="notificationtxt" layoutX="72.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Notifications" textAlignment="CENTER" wrappingWidth="128.2017822265625" />
                </children>
             </AnchorPane>
-            <ListView fx:id="notificationslist" prefHeight="415.0" prefWidth="279.0" />
+            <TableView fx:id="NotificationTable" prefHeight="419.0" prefWidth="270.0">
+              <columns>
+                <TableColumn fx:id="NotificationTextCol" prefWidth="267.0" text="Notification Text" />
+              </columns>
+            </TableView>
          </children>
       </VBox>
    </children>
