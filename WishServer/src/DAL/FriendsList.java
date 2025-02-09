@@ -21,6 +21,11 @@ public class FriendsList {
         getFriends();
         DBCon.close();
     }
+     public FriendsList(Friends friendRequest) throws SQLException {
+        DBCon = establishConnection();
+        sendFriendRequest(friendRequest);
+        DBCon.close();
+    }
 
     private Connection establishConnection() throws SQLException {
         return new DBConnection().getConection();
@@ -32,6 +37,17 @@ public class FriendsList {
 
     public ArrayList<Friends> getUserFriendsListArr() {
         return userFriendsListArr;
+    }
+    
+    private void sendFriendRequest(Friends friendRequest) throws SQLException {
+        String query = "INSERT INTO PERSONFRIENDS (PERSONUSERNAME, FRIENDUSERNAME, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement stmt = DBCon.prepareStatement(query)) {
+            stmt.setString(1, friendRequest.getPersonUserName());
+            stmt.setString(2, friendRequest.getFriendUserName());
+            stmt.setString(3,"Pending");
+            stmt.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
+            executeResult = stmt.executeUpdate() > 0 ? 1 : 0;
+        }
     }
 
     private void getFriends() throws SQLException {

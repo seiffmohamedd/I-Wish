@@ -73,9 +73,13 @@ public class ProfileViewController implements Initializable {
     @FXML
     private TableView<Notification> NotificationTable;
     private ObservableList<Notification> notificationData = FXCollections.observableArrayList();
-
+    public static String loggedInUser;
+    
     @FXML
     private TableColumn<Notification, String> NotificationTextCol;
+    
+    @FXML
+    private Button updateWishList;
     /**
      * Initializes the controller class.
      */
@@ -84,25 +88,24 @@ public class ProfileViewController implements Initializable {
          dg = new Dialog();
         try {
             SetSocket socket = new SetSocket();
-            JSONObject getWishReq = new JSONObject();
-            getWishReq.put("Command", "GetProfileData");
-
-            socket.getDOS().println(getWishReq);
-            // get wish list content and view it
+            JSONObject GetProfile = new JSONObject();
+            GetProfile.put("Command", "GetProfileData");
+            GetProfile.put("userName" , User.getUserName());
+            loggedInUser=User.getUserName();
+            socket.getDOS().println(GetProfile);
             JSONArray WishList = new JSONArray (socket.getDIS().readLine());
+            User.setWishList(WishList);
             System.out.println("this is wishList Json array"+WishList);
             updateTableFrom(WishList);
             // get Notification content and view it
             JSONArray Notification = new JSONArray(socket.getDIS().readLine());
             System.out.println("this is notification Json Array "+Notification);
             updateNotificationTable(Notification);
+            
             // fill userName in username text field
-            JSONObject UserData = new JSONObject(socket.getDIS().readLine());
-            System.err.println("the User data is : "+ UserData);
-            username.setText(UserData.getString("userName"));
-            points.setText(UserData.getString("points"));
-            
-            
+            username.setText(User.getUserName());
+            System.out.println("the points for the user " + User.getUserName() + " is " + User.getPoints());
+            points.setText(String.valueOf(User.getPoints()));
             
         } catch (IOException ex) {
             Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,7 +116,7 @@ public class ProfileViewController implements Initializable {
         
             
         
-    }    
+    }
     
     Dialog dg;
 
@@ -131,18 +134,20 @@ public class ProfileViewController implements Initializable {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                
+                int itemid = jsonObject.getInt("ItemID");
                 String itemName = jsonObject.getString("itemName");
                 String itemDescription = jsonObject.getString("itemDescription");
                 double price = jsonObject.getDouble("price");
                 double remaining = jsonObject.getDouble("remaining");
                 
-                wishListData.add(new WishList(itemName, itemDescription, price, remaining));
+                wishListData.add(new WishList(itemid, itemName, itemDescription, price, remaining));
             } catch (JSONException ex) {
+                System.err.println(ex);
                 dg.showDialog("ERROR", "ERROR in data retrival", "ERROR");
             }
         }
     }
+    
     
     
 
@@ -206,6 +211,13 @@ public class ProfileViewController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    @FXML
+    private void updateWishListAction(ActionEvent event) {
+       
+        new LoadView(event, "UpdateWishListView");
+        
     }
 
     

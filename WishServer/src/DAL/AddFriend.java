@@ -10,7 +10,16 @@ import java.util.ArrayList;
 
 public class AddFriend {
     private final Connection DBCon;
-    private final String query = "SELECT USERNAME FROM PERSON WHERE USERNAME LIKE ? AND USERNAME != ?";
+//    private final String query = "SELECT USERNAME FROM PERSON WHERE USERNAME LIKE ? AND USERNAME != ?";
+ private final String query = "SELECT USERNAME FROM PERSON " +
+                             "WHERE USERNAME LIKE ? " +
+                             "AND USERNAME != ? " +
+                             "AND USERNAME NOT IN (" +
+                             "    SELECT FRIENDUSERNAME FROM PERSONFRIENDS " +
+                             "    WHERE PERSONUSERNAME = ? " +
+                             "    AND STATUS IN ('Accepted', 'Pending')" +
+                             ")";
+
     private int executeResult;
     private String userName;
     private ArrayList<User> users = new ArrayList<>();
@@ -40,6 +49,7 @@ public class AddFriend {
         PreparedStatement statement = DBCon.prepareStatement(query);
         statement.setString(1, "%" + searchQuery + "%"); 
         statement.setString(2, userName);  
+        statement.setString(3, userName);  
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {
@@ -56,3 +66,6 @@ public class AddFriend {
 
 
 }
+
+//FINAALLLLLL  REPOS
+///DAHAHAHAHA LLL LREPPPOOOO yseiff

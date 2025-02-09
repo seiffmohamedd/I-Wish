@@ -2,38 +2,43 @@ package Requests;
 
 import DAL.AddFriend;
 import DAL.FriendsList;
+import DAL.GetItemLike;
 import DAL.GetNotification;
 import DAL.Login;
+import DAL.RemoveWishItem;
 import DAL.SignUp;
 import DAL.WishListItem;
 import DBO.Friends;
+import DBO.Items;
 import DBO.Notification;
 import org.json.JSONException;
 import org.json.JSONObject;
 import DBO.User;
 import DBO.WishList;
+import DBO.WishitemRemove;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import org.json.JSONArray;
 
 public class HandleRequests {
     private JSONObject userRequest;
     private String Command;
     private String HandlingResult;
-    private static User UserData;
+    private User UserData;
     private ArrayList<WishList> WLI;
     private ArrayList<Notification> userNotificationArr;
     private ArrayList<Friends> friendsList; 
     private ArrayList<User> userList; 
-
+    private ArrayList<Items> searchItems;
     public HandleRequests(JSONObject userRequest) throws JSONException, SQLException, ParseException {
         this.userRequest = userRequest;
         getCommand();
         executeRequest();
     }
 
-    public static User getUserData() {
+    public User getUserData() {
         return UserData;
     }
     
@@ -61,6 +66,10 @@ public class HandleRequests {
     
     public ArrayList<User> getUserList() { 
         return userList;
+    }
+    
+    public ArrayList<Items> getSearchItems() {
+        return searchItems;
     }
 
     public void executeRequest() throws JSONException, SQLException, ParseException {
@@ -98,9 +107,9 @@ public class HandleRequests {
                 break;
 
             case "GetProfileData":
-                WishListItem WL = new WishListItem(UserData.getUserName());
+                WishListItem WL = new WishListItem(userRequest.getString("userName"));
                 WLI = WL.getUserWishListItemsArr();
-                GetNotification userNotification = new GetNotification(UserData.getUserName());
+                GetNotification userNotification = new GetNotification(userRequest.getString("userName"));
                 userNotificationArr = userNotification.getUserNotificationtsArr();
                 switch (WL.getExecuteResult()) {
                     case 1:
@@ -113,7 +122,7 @@ public class HandleRequests {
                 break;
 
             case "getFriendsList":
-                FriendsList FL = new FriendsList(UserData.getUserName());
+                FriendsList FL = new FriendsList(userRequest.getString("userName"));
                 friendsList = FL.getUserFriendsListArr();
 
                 if (friendsList == null || friendsList.isEmpty()) {
@@ -123,22 +132,69 @@ public class HandleRequests {
                 }
                 break;
 
-                case "searchUsers":
-               String searchQuery = userRequest.getString("query");  
-               AddFriend AF = new AddFriend(UserData.getUserName(), searchQuery);  
-               userList = AF.getUsersListArr();
+               case "searchUsers":
+                String searchQuery = userRequest.getString("query");  
+                AddFriend AF = new AddFriend(userRequest.getString("userName"), searchQuery);  
+                userList = AF.getUsersListArr();
 
-               if (userList == null || userList.isEmpty()) {
-                   HandlingResult = "No Users found";
-               } else {
-                   JSONArray userArray = new JSONArray();
-                   for (User users : userList) {
-                       userArray.put(users.getUserName());  
-                   }
-                   HandlingResult = userArray.toString();  
-               }
-               break;
+                if (userList == null || userList.isEmpty()) {
+                    HandlingResult = "No Users found";
+                } else {
+                    JSONArray userArray = new JSONArray();
+                    HashSet<String> uniqueUsers = new HashSet<>();  // Prevent duplicates
 
+                    for (User users : userList) {
+                        if (uniqueUsers.add(users.getUserName())) {  // Add only unique usernames
+                            userArray.put(users.getUserName());  
+                        }
+                    }
+
+                    HandlingResult = userArray.toString();  
+                }
+                break;
+
+               
+               case "RemoveWishListItem":
+              
+                WishitemRemove wishitem = new WishitemRemove(userRequest);
+                RemoveWishItem remWishItem = new RemoveWishItem(wishitem);
+                switch (remWishItem.getExecuteResult()) {
+                    case 1:
+                        HandlingResult = "Success";
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break;
+                }
+                break;
+            case "getItemsLike":  
+                GetItemLike itemLike = new GetItemLike(userRequest);
+                switch (itemLike.getExecuteResult()) {
+                    case 1:
+                        searchItems = itemLike.getItemsList();
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break;
+                }
+                break;
+               case "sendFriendRequest":
+                String fromUser = userRequest.getString("fromUser");
+                String toUser = userRequest.getString("toUser");
+                String status = userRequest.getString("status");
+
+                Friends friendRequest = new Friends(fromUser, toUser, status);
+                FriendsList friendsListHandler = new FriendsList(friendRequest);
+
+                switch (friendsListHandler.getExecuteResult()) {
+                    case 1:
+                        HandlingResult = "Friend request sent!";
+                        break;
+                    case 0:
+                        HandlingResult = "Error sending friend request.";
+                        break;
+                }
+                break;
         }
     }
 }

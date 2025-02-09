@@ -16,6 +16,11 @@ public class Friends implements Serializable {
         this.timestamp = timestamp;
         this.status = status;
     }
+    public Friends(String personUserName, String friendUserName, String status) {
+        this.personUserName = personUserName;
+        this.friendUserName = friendUserName;
+        this.status = status;
+    }
 
     public Friends(String personUserName, String friendUserName) {
         this.personUserName = personUserName;

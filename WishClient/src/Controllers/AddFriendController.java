@@ -17,7 +17,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.HashSet;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -35,16 +37,18 @@ public class AddFriendController implements Initializable {
     @FXML
     private TableColumn<User, String> usernameColumn;
     @FXML
+    private TableColumn<User, Button> actionColumn;
+    @FXML
     private Button backButton;
 
     private ObservableList<User> searchResults = FXCollections.observableArrayList();
+    private String loggedInUser; 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Set the username column to display the username from the User object
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        
-        // Set up the table to display the users
+        loggedInUser = ProfileViewController.loggedInUser;
+        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("instanceUserName"));
+        actionColumn.setCellValueFactory(new PropertyValueFactory<>("addButton"));  
         searchResultsTable.setItems(searchResults);
     }
 
@@ -56,12 +60,12 @@ public class AddFriendController implements Initializable {
                 SetSocket socket = new SetSocket();
                 JSONObject searchReq = new JSONObject();
                 searchReq.put("Command", "searchUsers");
-                searchReq.put("query", searchQuery);  // Send the query entered by the user
+                searchReq.put("query", searchQuery);
+                searchReq.put("userName", loggedInUser); 
 
-                socket.getDOS().println(searchReq);  // Send the request to the server
-                String data = socket.getDIS().readLine();  // Read the server's response
+                socket.getDOS().println(searchReq);
+                String data = socket.getDIS().readLine();
 
-                // Update the search results with the received data
                 updateSearchResultsFromString(data);
             } catch (IOException | JSONException ex) {
                 Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,26 +74,71 @@ public class AddFriendController implements Initializable {
     }
 
     private void updateSearchResultsFromString(String data) {
-     searchResults.clear();  
-     try {
-         JSONArray userArray = new JSONArray(data);
-         for (int i = 0; i < userArray.length(); i++) {
-             String username = userArray.getString(i).trim();
+        searchResults.clear(); 
 
-             if (!username.isEmpty()) {
-                 User user = new User(username);  
-                 searchResults.add(user);
-             }
-         }
-     } catch (JSONException ex) {
-         Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
-     }
- }
+        try {
+            JSONArray userArray = new JSONArray(data);
+            HashSet<String> uniqueUsers = new HashSet<>();  
 
+            System.out.println("JSON from Server: " + data); 
+
+            ObservableList<User> freshList = FXCollections.observableArrayList(); 
+
+            for (int i = 0; i < userArray.length(); i++) {
+                String username = userArray.getString(i).trim();
+
+                if (!username.isEmpty() && uniqueUsers.add(username)) {
+                    System.out.println("User Added: " + username); 
+
+                    Button addButton = new Button("Add");
+                    String finalUsername = username; 
+                    addButton.setOnAction(event -> sendFriendRequestToServer(finalUsername));
+
+                    User user = new User(finalUsername, addButton);
+
+                    freshList.add(user); 
+                }
+            }
+
+            searchResults.setAll(freshList);
+            searchResultsTable.setItems(searchResults);
+            searchResultsTable.refresh(); 
+
+            for (User user : freshList) {
+                System.out.println(" - " + user.getInstanceUserName());  
+            }
+
+        } catch (JSONException ex) {
+            Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void sendFriendRequestToServer(String friendUsername) {
+        if (loggedInUser == null || loggedInUser.equals("UnknownUser")) {
+            System.out.println("Error: No logged-in user found.");
+            return;
+        }
+
+        try {
+            SetSocket socket = new SetSocket();
+            JSONObject request = new JSONObject();
+            request.put("Command", "sendFriendRequest");
+            request.put("fromUser", loggedInUser);
+            request.put("toUser", friendUsername);
+            request.put("status", "Pending");
+
+            socket.getDOS().println(request);
+            String response = socket.getDIS().readLine();
+
+            System.out.println("Friend request response: " + response);
+        } catch (IOException | JSONException ex) {
+            Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @FXML
     private void handleBackButton() {
-        // Navigate back to the previous screen (ProfileView)
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ProfileView.fxml"));
             Scene profileViewScene = new Scene(loader.load());
@@ -101,3 +150,6 @@ public class AddFriendController implements Initializable {
         }
     }
 }
+
+//THIS WORKSSSSSSSSSSSSSSSSSSSSSSSSSS YSEIFFF
+//FINALLLLLL
