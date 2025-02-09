@@ -19,6 +19,7 @@ public class FriendsList {
         this.userName = userName;
         System.out.println("Fetching friends list for user: " + userName);
         getFriends();
+        DBCon.close();
     }
 
     private Connection establishConnection() throws SQLException {

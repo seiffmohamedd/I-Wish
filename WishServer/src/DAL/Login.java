@@ -29,6 +29,7 @@ public class Login {
         DBCon = establishConnection();
 //        System.out.println("db connection established");
         executeResult = getLogInResponse();
+        DBCon.close();
     }
     
     private Connection establishConnection() throws SQLException{
@@ -50,7 +51,8 @@ public class Login {
         statement.setString(1, user.getUserName());
         statement.setString(2, user.getPassword());
         ResultSet rs = statement.executeQuery();
-        rs.next();
+        if(!rs.next())
+            return false;
         Date birthDate = null;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if (rs.getString("USERNAME").equals(user.getUserName())){

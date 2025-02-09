@@ -65,7 +65,6 @@ public class HandleRequests {
 
     public void executeRequest() throws JSONException, SQLException, ParseException {
         User user;
-
         switch (Command) {
             case "Signup":
                 user = new User(userRequest);

@@ -29,7 +29,7 @@ public class GetNotification {
         this.UserName = UserName;
         System.out.println("the username for Notifications is : " + UserName);
         getNotification();
-    
+        DBCon.close();
     }
 
     public int getExecuteResult() {

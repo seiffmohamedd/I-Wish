@@ -20,6 +20,7 @@ public class AddFriend {
         this.userName = userName;  
         System.out.println("Fetching users based on search query: " + searchQuery);
         getUsers(searchQuery); 
+        DBCon.close();
     }
 
 

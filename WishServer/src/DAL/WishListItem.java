@@ -28,7 +28,7 @@ public class WishListItem {
         this.UserName = UserName;
         System.out.println("the username is : " + UserName);
         getWishList();
-    
+        DBCon.close();
     }
     
     private Connection establishConnection() throws SQLException{
