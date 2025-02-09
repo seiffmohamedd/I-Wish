@@ -27,6 +27,7 @@
             <AnchorPane prefHeight="49.0" prefWidth="297.0">
                <children>
                   <Text fx:id="myWishListtxt" layoutX="207.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="My Wish List" textAlignment="CENTER" />
+                  <Button fx:id="updateWishList" layoutX="408.0" layoutY="4.0" mnemonicParsing="false" onAction="#updateWishListAction" prefHeight="42.0" prefWidth="110.0" text="Update WishList" />
                </children>
             </AnchorPane>
             <TableView fx:id="WishListTable" prefHeight="419.0" prefWidth="518.0">

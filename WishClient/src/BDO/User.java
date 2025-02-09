@@ -6,6 +6,7 @@
 package BDO;
 
 import java.io.Serializable;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,7 +26,7 @@ public class User implements Serializable{
     private String phone;
     private static int points;
     private int wishlistID;
-    
+    private static JSONArray WishList;
     
     
     public User(JSONObject user) throws JSONException{
@@ -125,6 +126,15 @@ public class User implements Serializable{
     public static int getPoints() {
         return points;
     }
+
+    public static JSONArray getWishList() {
+        return WishList;
+    }
+
+    public static void setWishList(JSONArray WishList) {
+        User.WishList = WishList;
+    }
+    
     
     
     

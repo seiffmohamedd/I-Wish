@@ -87,15 +87,8 @@ public class SignUpViewController implements Initializable {
 
     @FXML
     private void handleBackAction(ActionEvent event){
-        try {
-            Parent loginView = FXMLLoader.load(getClass().getResource("/Views/LoginView.fxml"));
-            Scene loginScene = new Scene(loginView);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setScene(loginScene);
-            window.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+      
+        new LoadView(event, "LoginView");
     }
     
     

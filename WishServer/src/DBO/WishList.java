@@ -12,12 +12,14 @@ import java.io.Serializable;
  * @author Windo
  */
 public class WishList implements Serializable{
+    private int itemid;
     private String itemName;
     private String itemDescription;
     private double price;
     private double remaining;
 
-    public WishList(String itemName, String itemDescription, double price, double remaining) {
+    public WishList(int itemid , String itemName, String itemDescription, double price, double remaining) {
+        this.itemid = itemid;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.price = price;
@@ -56,9 +58,15 @@ public class WishList implements Serializable{
         this.remaining = remaining;
     }
 
+    public int getItemid() {
+        return itemid;
+    }
+    
+    
     @Override
     public String toString() {
         return "{"
+                 + "\"ItemID\": \"" + itemid + "\", "
                 + "\"itemName\": \"" + itemName + "\", "
                 + "\"itemDescription\": \"" + itemDescription + "\", "
                 + "\"price\": " + price + ", "

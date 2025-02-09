@@ -2,16 +2,20 @@ package Requests;
 
 import DAL.AddFriend;
 import DAL.FriendsList;
+import DAL.GetItemLike;
 import DAL.GetNotification;
 import DAL.Login;
+import DAL.RemoveWishItem;
 import DAL.SignUp;
 import DAL.WishListItem;
 import DBO.Friends;
+import DBO.Items;
 import DBO.Notification;
 import org.json.JSONException;
 import org.json.JSONObject;
 import DBO.User;
 import DBO.WishList;
+import DBO.WishitemRemove;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ public class HandleRequests {
     private ArrayList<Notification> userNotificationArr;
     private ArrayList<Friends> friendsList; 
     private ArrayList<User> userList; 
-
+    private ArrayList<Items> searchItems;
     public HandleRequests(JSONObject userRequest) throws JSONException, SQLException, ParseException {
         this.userRequest = userRequest;
         getCommand();
@@ -63,6 +67,10 @@ public class HandleRequests {
         return userList;
     }
 
+    public ArrayList<Items> getSearchItems() {
+        return searchItems;
+    }
+    
     public void executeRequest() throws JSONException, SQLException, ParseException {
         User user;
         switch (Command) {
@@ -138,6 +146,31 @@ public class HandleRequests {
                    HandlingResult = userArray.toString();  
                }
                break;
+               
+            case "RemoveWishListItem":
+              
+                WishitemRemove wishitem = new WishitemRemove(userRequest);
+                RemoveWishItem remWishItem = new RemoveWishItem(wishitem);
+                switch (remWishItem.getExecuteResult()) {
+                    case 1:
+                        HandlingResult = "Success";
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break;
+                }
+                break;
+            case "getItemsLike":  
+                GetItemLike itemLike = new GetItemLike(userRequest);
+                switch (itemLike.getExecuteResult()) {
+                    case 1:
+                        searchItems = itemLike.getItemsList();
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break;
+                }
+                break;
 
         }
     }

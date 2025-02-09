@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class WishListItem {
     private final Connection DBCon;
-    private final String query = "select w.remaining, I.ITEMNAME,I.ITEMPRICE, I.ITEMDESCRIPTION from wishlistitem w, item i where w.ITEMID = i.ITEMID and w.userName =  ?";
+    private final String query = "select w.remaining,I.ITEMID, I.ITEMNAME,I.ITEMPRICE, I.ITEMDESCRIPTION from wishlistitem w, item i where w.ITEMID = i.ITEMID and w.userName =  ?";
     private int executeResult;
     private String UserName;
     private ArrayList<WishList> userWishListItemsArr = new ArrayList<>();
@@ -49,8 +49,8 @@ public class WishListItem {
         statement.setString(1, UserName);
         ResultSet rs = statement.executeQuery();
         while(rs.next()){
-            WishList tempWishListItem = new WishList(rs.getString("ITEMNAME"),rs.getString("ITEMDESCRIPTION"), rs.getDouble("ITEMPRICE"),rs.getDouble("remaining") );
-            System.out.println("tempWishListItem from db is : "+ tempWishListItem.getItemName());
+            WishList tempWishListItem = new WishList(rs.getInt("ITEMID"),rs.getString("ITEMNAME"),rs.getString("ITEMDESCRIPTION"), rs.getDouble("ITEMPRICE"),rs.getDouble("remaining") );
+            System.out.println("tempWishListItem from db is : "+ tempWishListItem.toString());
             userWishListItemsArr.add(tempWishListItem);
             executeResult = 1;
         }

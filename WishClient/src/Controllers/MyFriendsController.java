@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -68,19 +69,7 @@ public class MyFriendsController implements Initializable {
 
 
     @FXML
-    private void handleBackButton() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/profileview.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) friendsListView.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(MyFriendsController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void handleBackButton(ActionEvent event) {
+        new LoadView(event, "ProfileView");
     }
 }
-
-
-///FRIENDS LIST DONEEEEEEEEEE

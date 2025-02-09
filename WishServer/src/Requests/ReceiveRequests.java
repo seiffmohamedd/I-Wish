@@ -35,11 +35,15 @@ public class ReceiveRequests extends Thread {
                 if ("GetProfileData".equals(userRequest.getCommand())) {
                     DOS.println(userRequest.getUserWishListItems());
                     DOS.println(userRequest.getUserNotificationArr());       
-                } 
+                }
                 else if ("getFriendsList".equals(userRequest.getCommand())) {  
                     DOS.println(userRequest.getUserFriendsList());  
-                } 
-                else {
+                }else if ("RemoveWishListItem".equals(userRequest.getCommand())){  
+                    DOS.println(userRequest.getHandlingResult());
+                }else if ("getItemsLike".equals(userRequest.getCommand())){  
+                    DOS.println(userRequest.getSearchItems());
+
+                }else {
                     DOS.println(userRequest.getHandlingResult());
                     DOS.println(userRequest.getUserData());
                 }

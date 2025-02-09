@@ -18,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -89,16 +90,7 @@ public class AddFriendController implements Initializable {
 
 
     @FXML
-    private void handleBackButton() {
-        // Navigate back to the previous screen (ProfileView)
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ProfileView.fxml"));
-            Scene profileViewScene = new Scene(loader.load());
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(profileViewScene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void handleBackButton(ActionEvent event) {
+        new LoadView(event, "ProfileView");
     }
 }

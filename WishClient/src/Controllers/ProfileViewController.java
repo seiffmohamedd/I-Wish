@@ -76,6 +76,8 @@ public class ProfileViewController implements Initializable {
 
     @FXML
     private TableColumn<Notification, String> NotificationTextCol;
+    @FXML
+    private Button updateWishList;
     /**
      * Initializes the controller class.
      */
@@ -84,12 +86,13 @@ public class ProfileViewController implements Initializable {
          dg = new Dialog();
         try {
             SetSocket socket = new SetSocket();
-            JSONObject getWishReq = new JSONObject();
-            getWishReq.put("Command", "GetProfileData");
-            getWishReq.put("userName" , User.getUserName());
-            socket.getDOS().println(getWishReq);
+            JSONObject GetProfile = new JSONObject();
+            GetProfile.put("Command", "GetProfileData");
+            GetProfile.put("userName" , User.getUserName());
+            socket.getDOS().println(GetProfile);
             // get wish list content and view it
             JSONArray WishList = new JSONArray (socket.getDIS().readLine());
+            User.setWishList(WishList);
             System.out.println("this is wishList Json array"+WishList);
             updateTableFrom(WishList);
             // get Notification content and view it
@@ -129,14 +132,15 @@ public class ProfileViewController implements Initializable {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                
+                int itemid = jsonObject.getInt("ItemID");
                 String itemName = jsonObject.getString("itemName");
                 String itemDescription = jsonObject.getString("itemDescription");
                 double price = jsonObject.getDouble("price");
                 double remaining = jsonObject.getDouble("remaining");
                 
-                wishListData.add(new WishList(itemName, itemDescription, price, remaining));
+                wishListData.add(new WishList(itemid, itemName, itemDescription, price, remaining));
             } catch (JSONException ex) {
+                System.err.println(ex);
                 dg.showDialog("ERROR", "ERROR in data retrival", "ERROR");
             }
         }
@@ -180,30 +184,21 @@ public class ProfileViewController implements Initializable {
     
     
    @FXML
-    private void handleFriendsButton() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/MyFriends.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) friendbtn.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void handleFriendsButton(ActionEvent event) {
+       
+        new LoadView(event, "MyFriends");
     }
     @FXML
-    private void handleAddButton() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/AddFriend.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) addbtn.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void handleAddButton(ActionEvent event) {
+       
+        new LoadView(event, "AddFriend");
+    }
+
+    @FXML
+    private void updateWishListAction(ActionEvent event) {
+       
+        new LoadView(event, "UpdateWishListView");
+        
     }
 
     
