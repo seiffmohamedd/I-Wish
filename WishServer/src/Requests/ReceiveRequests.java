@@ -34,14 +34,14 @@ public class ReceiveRequests extends Thread {
 
                 if ("GetProfileData".equals(userRequest.getCommand())) {
                     DOS.println(userRequest.getUserWishListItems());
-                    DOS.println(userRequest.getUserNotificationArr());
-                    DOS.println(userRequest.getUserData());
+                    DOS.println(userRequest.getUserNotificationArr());       
                 } 
                 else if ("getFriendsList".equals(userRequest.getCommand())) {  
                     DOS.println(userRequest.getUserFriendsList());  
                 } 
                 else {
                     DOS.println(userRequest.getHandlingResult());
+                    DOS.println(userRequest.getUserData());
                 }
 
             } catch (SQLException | ParseException ex) {

@@ -56,6 +56,7 @@ public class AddFriendController implements Initializable {
                 SetSocket socket = new SetSocket();
                 JSONObject searchReq = new JSONObject();
                 searchReq.put("Command", "searchUsers");
+                searchReq.put("userName", User.getUserName());
                 searchReq.put("query", searchQuery);  // Send the query entered by the user
 
                 socket.getDOS().println(searchReq);  // Send the request to the server

@@ -21,7 +21,7 @@ public class HandleRequests {
     private JSONObject userRequest;
     private String Command;
     private String HandlingResult;
-    private static User UserData;
+    private User UserData;
     private ArrayList<WishList> WLI;
     private ArrayList<Notification> userNotificationArr;
     private ArrayList<Friends> friendsList; 
@@ -33,7 +33,7 @@ public class HandleRequests {
         executeRequest();
     }
 
-    public static User getUserData() {
+    public User getUserData() {
         return UserData;
     }
     
@@ -98,9 +98,9 @@ public class HandleRequests {
                 break;
 
             case "GetProfileData":
-                WishListItem WL = new WishListItem(UserData.getUserName());
+                WishListItem WL = new WishListItem(userRequest.getString("userName"));
                 WLI = WL.getUserWishListItemsArr();
-                GetNotification userNotification = new GetNotification(UserData.getUserName());
+                GetNotification userNotification = new GetNotification(userRequest.getString("userName"));
                 userNotificationArr = userNotification.getUserNotificationtsArr();
                 switch (WL.getExecuteResult()) {
                     case 1:
@@ -113,7 +113,7 @@ public class HandleRequests {
                 break;
 
             case "getFriendsList":
-                FriendsList FL = new FriendsList(UserData.getUserName());
+                FriendsList FL = new FriendsList(userRequest.getString("userName"));
                 friendsList = FL.getUserFriendsListArr();
 
                 if (friendsList == null || friendsList.isEmpty()) {
@@ -125,7 +125,7 @@ public class HandleRequests {
 
                 case "searchUsers":
                String searchQuery = userRequest.getString("query");  
-               AddFriend AF = new AddFriend(UserData.getUserName(), searchQuery);  
+               AddFriend AF = new AddFriend(userRequest.getString("userName"), searchQuery);  
                userList = AF.getUsersListArr();
 
                if (userList == null || userList.isEmpty()) {
@@ -133,7 +133,7 @@ public class HandleRequests {
                } else {
                    JSONArray userArray = new JSONArray();
                    for (User users : userList) {
-                       userArray.put(users.getUserName());  
+                       userArray.put(userRequest.getString("userName"));  
                    }
                    HandlingResult = userArray.toString();  
                }

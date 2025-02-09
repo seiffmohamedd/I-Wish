@@ -86,7 +86,7 @@ public class ProfileViewController implements Initializable {
             SetSocket socket = new SetSocket();
             JSONObject getWishReq = new JSONObject();
             getWishReq.put("Command", "GetProfileData");
-
+            getWishReq.put("userName" , User.getUserName());
             socket.getDOS().println(getWishReq);
             // get wish list content and view it
             JSONArray WishList = new JSONArray (socket.getDIS().readLine());
@@ -96,13 +96,11 @@ public class ProfileViewController implements Initializable {
             JSONArray Notification = new JSONArray(socket.getDIS().readLine());
             System.out.println("this is notification Json Array "+Notification);
             updateNotificationTable(Notification);
+            
             // fill userName in username text field
-            JSONObject UserData = new JSONObject(socket.getDIS().readLine());
-            System.err.println("the User data is : "+ UserData);
-            username.setText(UserData.getString("userName"));
-            points.setText(UserData.getString("points"));
-            
-            
+            username.setText(User.getUserName());
+            System.out.println("the points for the user " + User.getUserName() + " is " + User.getPoints());
+            points.setText(String.valueOf(User.getPoints()));
             
         } catch (IOException ex) {
             Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,6 +1,7 @@
 package Controllers;
 
 import BDO.Friends;
+import BDO.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,6 +40,7 @@ public class MyFriendsController implements Initializable {
 
             JSONObject getFriendsReq = new JSONObject();
             getFriendsReq.put("Command", "getFriendsList");
+            getFriendsReq.put("userName", User.getUserName());
 
             socket.getDOS().println(getFriendsReq);
             String friendsData = socket.getDIS().readLine();

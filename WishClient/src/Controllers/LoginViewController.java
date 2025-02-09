@@ -60,7 +60,7 @@ public class LoginViewController implements Initializable {
             SetSocket socket = new SetSocket();
             socket.getDOS().println(userJSONData);
             String DISLine = socket.getDIS().readLine();
-            
+            new User(new JSONObject(socket.getDIS().readLine()));
             if("Success".equals(DISLine)){
                 dg.showDialog("Login","Login Success","CONFIRMATION");
                 profileView(event);
