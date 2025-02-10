@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
-import java.util.HashSet;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +24,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
-
+import java.util.HashSet;
 public class AddFriendController implements Initializable {
-
     @FXML
     private TextField searchField;
     @FXML
@@ -37,18 +35,17 @@ public class AddFriendController implements Initializable {
     @FXML
     private TableColumn<User, String> usernameColumn;
     @FXML
-    private TableColumn<User, Button> actionColumn;
-    @FXML
     private Button backButton;
-
-    private ObservableList<User> searchResults = FXCollections.observableArrayList();
     private String loggedInUser; 
-
+    private ObservableList<User> searchResults = FXCollections.observableArrayList();
+    @FXML
+    private TableColumn<User, Button> actionColumn;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loggedInUser = ProfileViewController.loggedInUser;
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("instanceUserName"));
-        actionColumn.setCellValueFactory(new PropertyValueFactory<>("addButton"));  
+        actionColumn.setCellValueFactory(new PropertyValueFactory<>("addButton")); 
+        
         searchResultsTable.setItems(searchResults);
     }
 
@@ -60,12 +57,13 @@ public class AddFriendController implements Initializable {
                 SetSocket socket = new SetSocket();
                 JSONObject searchReq = new JSONObject();
                 searchReq.put("Command", "searchUsers");
-                searchReq.put("query", searchQuery);
+//                searchReq.put("userName",  User.getUserName()); 
                 searchReq.put("userName", loggedInUser); 
-
+                searchReq.put("query", searchQuery);
                 socket.getDOS().println(searchReq);
                 String data = socket.getDIS().readLine();
 
+                
                 updateSearchResultsFromString(data);
             } catch (IOException | JSONException ex) {
                 Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,6 +71,32 @@ public class AddFriendController implements Initializable {
         }
     }
 
+//    private void updateSearchResultsFromString(String data) {
+//         searchResults.clear();  
+//         try {
+//             JSONArray userArray = new JSONArray(data);
+//             for (int i = 0; i < userArray.length(); i++) {
+//                 String username = userArray.getString(i).trim();
+//
+//                 if (!username.isEmpty()) {
+//                     User user = new User(username);  
+//                     searchResults.add(user);
+//                 }
+//             }
+//         } catch (JSONException ex) {
+//             Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
+//         }
+//     }    
+   
+    
+     @FXML
+    private void handleBackButton(ActionEvent event) {
+        new LoadView(event, "ProfileView");
+    }
+    
+    
+    
+    
     private void updateSearchResultsFromString(String data) {
         searchResults.clear(); 
 
@@ -137,18 +161,18 @@ public class AddFriendController implements Initializable {
         }
     }
 
-    @FXML
-    private void handleBackButton() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ProfileView.fxml"));
-            Scene profileViewScene = new Scene(loader.load());
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            stage.setScene(profileViewScene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    @FXML
+//    private void handleBackButton() {
+//        try {
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ProfileView.fxml"));
+//            Scene profileViewScene = new Scene(loader.load());
+//            Stage stage = (Stage) backButton.getScene().getWindow();
+//            stage.setScene(profileViewScene);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//}
 }
 
 //THIS WORKSSSSSSSSSSSSSSSSSSSSSSSSSS YSEIFFF

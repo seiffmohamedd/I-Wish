@@ -6,12 +6,10 @@
 package BDO;
 
 import java.io.Serializable;
-import javafx.scene.control.Button;
 import org.json.JSONArray;
 import org.json.JSONException;
-import BDO.WishList;
 import org.json.JSONObject;
-
+import javafx.scene.control.Button;
 
 
 /**
@@ -20,7 +18,6 @@ import org.json.JSONObject;
  */
 public class User implements Serializable{
     private static String userName;
-    private String instanceUserName; 
     private String firstName;
     private String lastName;
     private String password;
@@ -29,11 +26,9 @@ public class User implements Serializable{
     private String phone;
     private static int points;
     private int wishlistID;
-    private Button addButton;
     private static JSONArray WishList;
-
-    
-    
+    private Button addButton;
+    private String instanceUserName; 
     public User(JSONObject user) throws JSONException{
         this.userName = user.getString("userName");
         this.firstName = user.getString("firstName");
@@ -70,30 +65,6 @@ public class User implements Serializable{
         this.points = points;
         this.wishlistID = wishlistID;
     }
-    
-    
-     public User(String userName, Button addButton) {
-        this.instanceUserName = userName;
-        this.addButton = addButton;  
-    }
-
-    public String getInstanceUserName() {
-        return instanceUserName;
-    }
-
-    public void setInstanceUserName(String instanceUserName) {
-        this.instanceUserName = instanceUserName;
-    }
-     
-     
-    public Button getAddButton() {
-        return addButton;
-    }
-
-    public void setAddButton(Button addButton) {
-        this.addButton = addButton;
-    }
-
     
     
     public static String getUserName() {
@@ -155,7 +126,7 @@ public class User implements Serializable{
     public static int getPoints() {
         return points;
     }
-    
+
     public static JSONArray getWishList() {
         return WishList;
     }
@@ -163,6 +134,8 @@ public class User implements Serializable{
     public static void setWishList(JSONArray WishList) {
         User.WishList = WishList;
     }
+    
+    
     
     
     @Override
@@ -179,7 +152,27 @@ public class User implements Serializable{
                 + "\"wishlistID\": " + wishlistID
                 + "}";
     }
-
     
+    public User(String userName, Button addButton) {
+        this.instanceUserName = userName;
+        this.addButton = addButton;  
+    }
+
+    public String getInstanceUserName() {
+        return instanceUserName;
+    }
+
+    public void setInstanceUserName(String instanceUserName) {
+        this.instanceUserName = instanceUserName;
+    }
+     
+     
+    public Button getAddButton() {
+        return addButton;
+    }
+
+    public void setAddButton(Button addButton) {
+        this.addButton = addButton;
+    }
 
 }

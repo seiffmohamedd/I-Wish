@@ -74,10 +74,8 @@ public class ProfileViewController implements Initializable {
     private TableView<Notification> NotificationTable;
     private ObservableList<Notification> notificationData = FXCollections.observableArrayList();
     public static String loggedInUser;
-    
     @FXML
     private TableColumn<Notification, String> NotificationTextCol;
-    
     @FXML
     private Button updateWishList;
     /**
@@ -91,8 +89,8 @@ public class ProfileViewController implements Initializable {
             JSONObject GetProfile = new JSONObject();
             GetProfile.put("Command", "GetProfileData");
             GetProfile.put("userName" , User.getUserName());
-            loggedInUser=User.getUserName();
             socket.getDOS().println(GetProfile);
+            // get wish list content and view it
             JSONArray WishList = new JSONArray (socket.getDIS().readLine());
             User.setWishList(WishList);
             System.out.println("this is wishList Json array"+WishList);
@@ -101,7 +99,7 @@ public class ProfileViewController implements Initializable {
             JSONArray Notification = new JSONArray(socket.getDIS().readLine());
             System.out.println("this is notification Json Array "+Notification);
             updateNotificationTable(Notification);
-            
+            loggedInUser=User.getUserName();
             // fill userName in username text field
             username.setText(User.getUserName());
             System.out.println("the points for the user " + User.getUserName() + " is " + User.getPoints());
@@ -151,7 +149,6 @@ public class ProfileViewController implements Initializable {
     
     
 
-
     public void updateNotificationTable(JSONArray jsonArray) {
         // Set the column property
         NotificationTextCol.setCellValueFactory(new PropertyValueFactory<>("notificationText"));
@@ -187,38 +184,22 @@ public class ProfileViewController implements Initializable {
     
     
    @FXML
-    private void handleFriendsButton() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/MyFriends.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) friendbtn.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void handleFriendsButton(ActionEvent event) {
+       
+        new LoadView(event, "MyFriends");
     }
     @FXML
-    private void handleAddButton() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/AddFriend.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) addbtn.getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void handleAddButton(ActionEvent event) {
+       
+        new LoadView(event, "AddFriend");
     }
-    
+
     @FXML
     private void updateWishListAction(ActionEvent event) {
        
         new LoadView(event, "UpdateWishListView");
         
     }
-
     
+//sssssssssssssssssssssss
 }

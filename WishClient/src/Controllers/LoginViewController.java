@@ -60,10 +60,10 @@ public class LoginViewController implements Initializable {
             SetSocket socket = new SetSocket();
             socket.getDOS().println(userJSONData);
             String DISLine = socket.getDIS().readLine();
-            
+            new User(new JSONObject(socket.getDIS().readLine()));
             if("Success".equals(DISLine)){
                 dg.showDialog("Login","Login Success","CONFIRMATION");
-                profileView(event);
+                new LoadView(event, "ProfileView");
             }else{ 
                 dg.showDialog("Login","Failed to Login user data is wrong","ERROR");
             }
@@ -76,31 +76,8 @@ public class LoginViewController implements Initializable {
 
     @FXML
     private void handleSignUp(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/SignUpView.fxml"));
-            Parent root = loader.load();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         new LoadView(event, "SignUpView");
+
     }
-    
-    
-    private void profileView(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ProfileView.fxml"));
-            Parent root = loader.load();     
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LoginViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    
+ 
 }

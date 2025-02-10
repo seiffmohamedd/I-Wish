@@ -1,5 +1,5 @@
 package Requests;
-
+//sssssssssssss
 import DAL.AddFriend;
 import DAL.FriendsList;
 import DAL.GetItemLike;
@@ -19,9 +19,8 @@ import DBO.WishitemRemove;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import org.json.JSONArray;
-
+import java.util.HashSet;
 public class HandleRequests {
     private JSONObject userRequest;
     private String Command;
@@ -71,7 +70,7 @@ public class HandleRequests {
     public ArrayList<Items> getSearchItems() {
         return searchItems;
     }
-
+    
     public void executeRequest() throws JSONException, SQLException, ParseException {
         User user;
         switch (Command) {
@@ -132,29 +131,23 @@ public class HandleRequests {
                 }
                 break;
 
-               case "searchUsers":
+                case "searchUsers":
                 String searchQuery = userRequest.getString("query");  
                 AddFriend AF = new AddFriend(userRequest.getString("userName"), searchQuery);  
-                userList = AF.getUsersListArr();
+                userList = AF.getUsersListArr();  // Fetch users from DB
 
                 if (userList == null || userList.isEmpty()) {
                     HandlingResult = "No Users found";
                 } else {
                     JSONArray userArray = new JSONArray();
-                    HashSet<String> uniqueUsers = new HashSet<>();  // Prevent duplicates
-
                     for (User users : userList) {
-                        if (uniqueUsers.add(users.getUserName())) {  // Add only unique usernames
-                            userArray.put(users.getUserName());  
-                        }
+//                        userArray.put(userRequest.getString("userName")); 
+                        userArray.put(users.getUserName()); 
                     }
-
                     HandlingResult = userArray.toString();  
                 }
                 break;
-
-               
-               case "RemoveWishListItem":
+case "RemoveWishListItem":
               
                 WishitemRemove wishitem = new WishitemRemove(userRequest);
                 RemoveWishItem remWishItem = new RemoveWishItem(wishitem);
