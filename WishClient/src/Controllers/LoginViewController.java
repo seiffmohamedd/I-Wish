@@ -60,7 +60,14 @@ public class LoginViewController implements Initializable {
             SetSocket socket = new SetSocket();
             socket.getDOS().println(userJSONData);
             String DISLine = socket.getDIS().readLine();
-            new User(new JSONObject(socket.getDIS().readLine()));
+            String response = socket.getDIS().readLine();
+            // Check if response is valid JSON before parsing
+            if (response == null || response.isEmpty() || !response.trim().startsWith("{")) {
+                System.err.println("Invalid JSON response: " + response);
+            } else {
+                new User(new JSONObject(response));
+            }
+            
             if("Success".equals(DISLine)){
                 dg.showDialog("Login","Login Success","CONFIRMATION");
                 new LoadView(event, "ProfileView");

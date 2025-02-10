@@ -60,7 +60,7 @@ public class SignUpViewController implements Initializable {
         if (ID.getText().isEmpty() || Fname.getText().isEmpty() || Lname.getText().isEmpty() || 
             password.getText().isEmpty() || gender.getText().isEmpty() || birthDate.getText().isEmpty() || phone.getText().isEmpty()) {
             dg.showDialog("Data Insertion","Signup Failed, All fields are required!","ERROR");
-        }
+        }else{
             
         User user = new User(ID.getText(), Fname.getText(), Lname.getText(), password.getText(), gender.getText(), birthDate.getText(), phone.getText());
         JSONObject userJSONData = new JSONObject(user);
@@ -82,6 +82,7 @@ public class SignUpViewController implements Initializable {
             }else{ dg.showDialog("SignUp","Failed to insert user data","ERROR");}
         } catch (IOException ex) {
             dg.showDialog("Server Connection","Cannot connect to server","ERROR");
+        }
         }
     }
 
