@@ -98,44 +98,59 @@ public class AddFriendController implements Initializable {
     
     
     private void updateSearchResultsFromString(String data) {
-        searchResults.clear(); 
+        searchResults.clear();
 
         try {
+            if (data == null || data.trim().isEmpty()) { 
+                System.out.println("Server returned an empty response.");
+                new Dialog().showDialog("Search Result", "No users found matching your search.", "INFORMATION");
+                return;
+            }
+
+            if (!data.trim().startsWith("[")) { 
+                System.out.println("Invalid JSON response from server: " + data);
+                new Dialog().showDialog("Search Result", "No users found matching your search.", "INFORMATION");
+
+                return;
+            }
+
             JSONArray userArray = new JSONArray(data);
-            HashSet<String> uniqueUsers = new HashSet<>();  
+            HashSet<String> uniqueUsers = new HashSet<>();
+            ObservableList<User> freshList = FXCollections.observableArrayList();
 
-            System.out.println("JSON from Server: " + data); 
+            System.out.println("JSON from Server: " + data);
 
-            ObservableList<User> freshList = FXCollections.observableArrayList(); 
+            if (userArray.length() == 0) {  // ✅ Handle "No Users Found" Case
+                System.out.println("No users found.");
+                new Dialog().showDialog("Search Result", "No users found matching your search.", "INFORMATION");
+                return;
+            }
 
             for (int i = 0; i < userArray.length(); i++) {
                 String username = userArray.getString(i).trim();
 
                 if (!username.isEmpty() && uniqueUsers.add(username)) {
-                    System.out.println("User Added: " + username); 
+                    System.out.println("User Added: " + username);
 
                     Button addButton = new Button("Add");
-                    String finalUsername = username; 
+                    String finalUsername = username;
                     addButton.setOnAction(event -> sendFriendRequestToServer(finalUsername));
 
                     User user = new User(finalUsername, addButton);
-
-                    freshList.add(user); 
+                    freshList.add(user);
                 }
             }
 
             searchResults.setAll(freshList);
             searchResultsTable.setItems(searchResults);
-            searchResultsTable.refresh(); 
-
-            for (User user : freshList) {
-                System.out.println(" - " + user.getInstanceUserName());  
-            }
+            searchResultsTable.refresh();
 
         } catch (JSONException ex) {
-            Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, "JSON Parsing Error", ex);
+            new Dialog().showDialog("Error", "An error occurred while processing the search results.", "ERROR");
         }
     }
+
 
     @FXML
     private void sendFriendRequestToServer(String friendUsername) {

@@ -40,15 +40,29 @@ public class FriendsList {
     }
     
     private void sendFriendRequest(Friends friendRequest) throws SQLException {
-        String query = "INSERT INTO PERSONFRIENDS (PERSONUSERNAME, FRIENDUSERNAME, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = DBCon.prepareStatement(query)) {
+        String friendRequestQuery = "INSERT INTO PERSONFRIENDS (PERSONUSERNAME, FRIENDUSERNAME, STATUS, TIMESTAMP) VALUES (?, ?, ?, ?)";
+        String notificationQuery = "INSERT INTO Notification (notificationTEXT, timeStamp, userName) VALUES (?, ?, ?)";
+
+        try (
+            PreparedStatement stmt = DBCon.prepareStatement(friendRequestQuery);
+            PreparedStatement notifStmt = DBCon.prepareStatement(notificationQuery)
+        ) {
             stmt.setString(1, friendRequest.getPersonUserName());
             stmt.setString(2, friendRequest.getFriendUserName());
-            stmt.setString(3,"Pending");
+            stmt.setString(3, "Pending");
             stmt.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
             executeResult = stmt.executeUpdate() > 0 ? 1 : 0;
+
+            if (executeResult > 0) {
+                String notificationMessage = "Friend request from " + friendRequest.getPersonUserName();
+                notifStmt.setString(1, notificationMessage);
+                notifStmt.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
+                notifStmt.setString(3, friendRequest.getFriendUserName());
+                notifStmt.executeUpdate();
+            }
         }
     }
+
 
     private void getFriends() throws SQLException {
         PreparedStatement statement = DBCon.prepareStatement(query);
