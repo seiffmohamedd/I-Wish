@@ -31,6 +31,13 @@ public class WishList implements Serializable{
         this.itemid = itemid;
     }
 
+    public WishList(int itemid, String itemName, double price, String itemDescription) {
+        this.itemid = itemid;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.price = price;
+    }
+
     
     public String getItemName() {
         return itemName;

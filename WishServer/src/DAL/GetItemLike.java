@@ -21,14 +21,14 @@ import org.json.JSONObject;
  */
 public class GetItemLike {
     private final Connection DBCon;
-    private String itemName;
-    private final String query = "SELECT * from Item where lower(ITEMNAME) like ?";
+    private JSONObject userRequest;
+    private final String query = "SELECT * from Item where lower(ITEMNAME) like ? and itemID not in (select ITEMID from WISHLISTITEM where USERNAME =  ?)";
     private int executeResult;
     private ArrayList<Items> ItemsList = new ArrayList<>();
     
     public GetItemLike(JSONObject userRequest) throws SQLException, JSONException {
         DBCon = establishConnection();
-        itemName = userRequest.getString("item");  
+        this.userRequest = userRequest;  
         getItems(query);
         DBCon.close();
     }
@@ -47,9 +47,10 @@ public class GetItemLike {
     }
     
     
-    private void getItems(String query) throws SQLException {
+    private void getItems(String query) throws SQLException, JSONException {
         PreparedStatement statement = DBCon.prepareStatement(query);
-        statement.setString(1, "%" + itemName.toLowerCase() + "%"); 
+        statement.setString(1, "%" + userRequest.getString("item").toLowerCase() + "%"); 
+        statement.setString(2, userRequest.getString("userName") ); 
         ResultSet rs = statement.executeQuery();
         
         while (rs.next()) {

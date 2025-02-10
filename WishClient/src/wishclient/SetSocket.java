@@ -8,6 +8,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Windo
@@ -33,6 +35,15 @@ public class SetSocket {
     public PrintStream getDOS() {
         return DOS;
     }
-    
+    public void closeStreams(){
+        try {
+            DIS.close();
+            DOS.close();
+        } catch (IOException ex) {
+            System.out.println("Cannot close streams");
+            Logger.getLogger(SetSocket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     
 }

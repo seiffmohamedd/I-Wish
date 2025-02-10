@@ -49,64 +49,27 @@ public class UpdateWishListViewController implements Initializable {
     @FXML
     private TableColumn<WishList, Void> AddCol; // Updated to use Void for button column
     @FXML
-    private TableColumn<?, ?> PriceCol;
+    private TableColumn<WishList, String> PriceCol;
     @FXML
-    private TableColumn<?, ?> DescriptionCol;
+    private TableColumn<WishList, String> DescriptionCol;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            dg = new Dialog();
-            updateWishListTable(User.getWishList());
-            
-            // Set up the "Remove" button column for ViewMyItemsTable
-            setupRemoveButtonColumn();
-            
-            // Set up the "Add" button column for AddtoMyItemsTable
-            setupAddButtonColumn();
-            
-            socket = new SetSocket();
-        } catch (IOException ex) {
-            dg.showDialog("Socket error", "Can not open socet", "ERROR");
-        }
-        
-        
-    }   
-    
-    Dialog dg;
-    SetSocket socket;
-    @FXML
-    private void searchbtnAction(ActionEvent event) {
-     
-        try {
-            SetSocket s = new SetSocket();
-            JSONObject request = new JSONObject();
-            request.put("Command", "getItemsLike");
-            request.put("userName",User.getUserName());
-            request.put("item",ItemNameSearchTxt.getText());
-            s.getDOS().println(request);
-            String data = s.getDIS().readLine();
-            if("Fail".equals(data)){
-                dg.showDialog("DataError", "No data Found", "ERROR");
-            }else{
-                System.out.println("the output for search is "+data);
-                }
-        } catch (JSONException ex) {
-            Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        
+        dg = new Dialog();
+        updateWishListTable(User.getWishList());
+        // Set up the "Remove" button column for ViewMyItemsTable
+        setupRemoveButtonColumn();
+        // Set up the "Add" button column for AddtoMyItemsTable
+//        setupAddButtonColumn();
+
     }
 
-    @FXML
-    private void backbtnAction(ActionEvent event) {
-        new LoadView(event, "ProfileView");
-    }
+    Dialog dg;
+    SetSocket socket;
+    
     
     public void updateWishListTable(JSONArray jsonArray) {
         ItemsInMyWishCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
@@ -117,10 +80,10 @@ public class UpdateWishListViewController implements Initializable {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                
+
                 String itemName = jsonObject.getString("itemName");
                 int ItemID = jsonObject.getInt("ItemID");
-                wishListData.add(new WishList(ItemID,itemName));
+                wishListData.add(new WishList(ItemID, itemName));
             } catch (JSONException ex) {
                 dg.showDialog("ERROR", "ERROR in data retrieval", "ERROR");
             }
@@ -130,6 +93,72 @@ public class UpdateWishListViewController implements Initializable {
 //        AddtoMyItemsTable.setItems(wishListData);
 //        ItemstoAddCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
     }
+    @FXML
+    private void searchbtnAction(ActionEvent event) {
+        setupAddButtonColumn();
+        try {
+            socket = new SetSocket();
+            JSONObject request = new JSONObject();
+            request.put("Command", "getItemsLike");
+            request.put("userName", User.getUserName());
+            request.put("item", ItemNameSearchTxt.getText());
+
+            socket.getDOS().println(request);
+            socket.getDOS().flush(); // Ensure data is sent
+            
+            String response = socket.getDIS().readLine();
+
+            if (response == null || response.isEmpty() || response.equals("Fail")) {
+                dg.showDialog("Data Error", "No data found", "ERROR");
+                return;
+            }
+
+            JSONArray data = new JSONArray(response);
+            System.out.println("Search results: " + data);
+
+            updateAddToItemsTable(data);
+            socket.closeStreams();
+        } catch (JSONException | IOException ex) {
+            Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void updateAddToItemsTable(JSONArray jsonArray) {
+        ObservableList<WishList> addItemsList = FXCollections.observableArrayList();
+
+        // Iterate through the JSON array and extract objects
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                int itemID = jsonObject.getInt("itemID");
+                String itemName = jsonObject.getString("itemName");
+                double itemPrice = jsonObject.getDouble("itemPrice");
+
+                String itemDescription = jsonObject.getString("itemDescription");
+
+                // Add extracted data to the ObservableList
+                addItemsList.add(new WishList(itemID, itemName, itemPrice, itemDescription));
+            } catch (JSONException ex) {
+                dg.showDialog("ERROR", "Error in data retrieval", "ERROR");
+            }
+        }
+
+        // Set cell values for table columns
+        ItemstoAddCol.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        PriceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+        DescriptionCol.setCellValueFactory(new PropertyValueFactory<>("itemDescription"));
+
+        // Populate the table
+        AddtoMyItemsTable.setItems(addItemsList);
+    }
+
+    @FXML
+    private void backbtnAction(ActionEvent event) {
+        new LoadView(event, "ProfileView");
+    }
+
+    
 
     private void setupRemoveButtonColumn() {
         RemoveCol.setCellFactory(new Callback<TableColumn<WishList, Void>, TableCell<WishList, Void>>() {
@@ -141,24 +170,30 @@ public class UpdateWishListViewController implements Initializable {
                     {
                         btn.setOnAction(event -> {
                             try {
+                                socket = new SetSocket();
                                 WishList data = getTableView().getItems().get(getIndex());
                                 System.out.println("Removed Item: " + data.getItemName());
                                 System.out.println("Removed Item id : " + data.getItemid());
-                                WishitemRemove wishRemove = new WishitemRemove(data.getItemid(),User.getUserName());
+                                WishitemRemove wishRemove = new WishitemRemove(data.getItemid(), User.getUserName());
                                 JSONObject removeItemReq = new JSONObject(wishRemove);
                                 removeItemReq.put("Command", "RemoveWishListItem");
-                                System.out.println("the requests sends is : "+ removeItemReq);
-                                wishListData.remove(data);  // Remove the item from the table
+                                System.out.println("the requests sends is : " + removeItemReq);
+                              
                                 socket.getDOS().println(removeItemReq);
-                                try {
-                                    if("Success".equals(socket.getDIS().readLine()))
-                                        dg.showDialog("Item Remove", "Item remove Successfully", "CONFIRMATION");
-                                    else
-                                        dg.showDialog("Item Remove", "Failed to Remove Item ", "ERROR");
-                                } catch (IOException ex) {
-                                    Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
+                                socket.getDOS().flush(); // Ensure data is sent
+                                
+                                if ("Success".equals(socket.getDIS().readLine())) {
+                                   dg.showDialog("Item Remove", "Item remove Successfully", "CONFIRMATION");
+                                   wishListData.remove(data); // Remove from ViewMyItemsTable
+                                   AddtoMyItemsTable.getItems().add(data); // Add to AddtoMyItemsTable
+                                } else {
+                                    dg.showDialog("Item Remove", "Failed to Remove Item ", "ERROR");
                                 }
+                                socket.closeStreams();
+                                
                             } catch (JSONException ex) {
+                                Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IOException ex) {
                                 Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         });
@@ -187,9 +222,34 @@ public class UpdateWishListViewController implements Initializable {
 
                     {
                         btn.setOnAction(event -> {
+
                             WishList data = getTableView().getItems().get(getIndex());
-                            System.out.println("Added Item: " + data.getItemName());
-                            // Perform your action here, e.g., add the item to a cart
+                            System.out.println("Added Item: " + data.getItemName() + " with id " + data.getItemid());
+                            JSONObject addItem = new JSONObject();
+                            try {
+                                socket = new SetSocket();
+                                addItem.put("Command", "addItemToWish");
+                                addItem.put("ItemID", data.getItemid());
+                                addItem.put("userName", User.getUserName());
+                                addItem.put("Remaining", data.getPrice());
+                                socket.getDOS().println(addItem);
+                                socket.getDOS().flush(); // Ensure data is sent
+                                
+                                if ("Success".equals(socket.getDIS().readLine())) {
+                                    dg.showDialog("Item Add", "Item Added Successfully", "CONFIRMATION");
+                                       
+                                    getTableView().getItems().remove(data);
+                                    wishListData.add(data);
+                                } else {
+                                    dg.showDialog("Item Add", "Failed to Add Item to User", "ERROR");
+                                }
+                                socket.closeStreams();
+                            } catch (JSONException ex) {
+                                Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (IOException ex) {
+                                Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
                         });
                     }
 

@@ -21,6 +21,8 @@ public class Dialog {
             aboutDialog = new Alert(Alert.AlertType.INFORMATION);}
         else if("ERROR".equals(type)){
             aboutDialog = new Alert(Alert.AlertType.ERROR);}
+        else if("ERROR".equals(type)){
+            aboutDialog = new Alert(Alert.AlertType.WARNING);}
         else{
             aboutDialog = new Alert(Alert.AlertType.CONFIRMATION);}
     

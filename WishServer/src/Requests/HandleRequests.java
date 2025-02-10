@@ -1,6 +1,7 @@
 package Requests;
 //sssssssssssss
 import DAL.AddFriend;
+import DAL.AddItemToUserWish;
 import DAL.FriendsList;
 import DAL.GetItemLike;
 import DAL.GetNotification;
@@ -147,7 +148,7 @@ public class HandleRequests {
                     HandlingResult = userArray.toString();  
                 }
                 break;
-case "RemoveWishListItem":
+            case "RemoveWishListItem":
               
                 WishitemRemove wishitem = new WishitemRemove(userRequest);
                 RemoveWishItem remWishItem = new RemoveWishItem(wishitem);
@@ -186,6 +187,18 @@ case "RemoveWishListItem":
                     case 0:
                         HandlingResult = "Error sending friend request.";
                         break;
+                }
+                break;
+            case "addItemToWish":
+                AddItemToUserWish addWishItem = new AddItemToUserWish(userRequest);
+                switch (addWishItem.getExecuteResult()) {
+                    case 1:
+                        HandlingResult = "Success";
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break;
+                    
                 }
                 break;
         }
