@@ -49,7 +49,7 @@ public class UpdateWishListViewController implements Initializable {
     @FXML
     private TableColumn<WishList, Void> AddCol; // Updated to use Void for button column
     @FXML
-    private TableColumn<WishList, String> PriceCol;
+    private TableColumn<WishList, Double> PriceCol;
     @FXML
     private TableColumn<WishList, String> DescriptionCol;
 
@@ -108,15 +108,20 @@ public class UpdateWishListViewController implements Initializable {
             
             String response = socket.getDIS().readLine();
 
-            if (response == null || response.isEmpty() || response.equals("Fail")) {
-                dg.showDialog("Data Error", "No data found", "ERROR");
-                return;
+            if (response == null || response.trim().isEmpty()) {
+                System.err.println("Error: Received empty response.");
+            } else if (response.trim().startsWith("[")) {
+                JSONArray data = new JSONArray(response);
+                updateAddToItemsTable(data);
+                System.out.println("Valid JSON Array: " + data.toString());
+            } else {
+                dg.showDialog("Item Data", "No data found for this item Name", "ERROR");
             }
 
-            JSONArray data = new JSONArray(response);
-            System.out.println("Search results: " + data);
+//            JSONArray data = new JSONArray(response);
+//            System.out.println("Search results: " + data);
 
-            updateAddToItemsTable(data);
+          
             socket.closeStreams();
         } catch (JSONException | IOException ex) {
             Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
