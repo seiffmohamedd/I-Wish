@@ -13,13 +13,15 @@
    <children>
       <AnchorPane prefHeight="75.0" prefWidth="794.0" styleClass="anchor-pane" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <TextField fx:id="username" editable="false" layoutX="14.0" layoutY="23.0" prefHeight="26.0" prefWidth="146.0" promptText="user name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
-            <Button fx:id="friendbtn" layoutX="215.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="31.0" prefWidth="119.0" text="Friends" AnchorPane.topAnchor="30.0" />
+            <TextField fx:id="username" editable="false" layoutX="14.0" layoutY="23.0" prefHeight="26.0" prefWidth="123.0" promptText="user name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
+            <Button fx:id="friendbtn" layoutX="174.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="31.0" prefWidth="75.0" text="Friends" AnchorPane.topAnchor="28.0" />
             <TextField fx:id="points" editable="false" layoutX="495.0" layoutY="23.0" prefHeight="26.0" prefWidth="123.0" promptText="Points" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
-            <Button fx:id="addbtn" layoutX="360.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="31.0" prefWidth="110.0" text="Add" AnchorPane.topAnchor="30.0" />
-            <Button fx:id="requestbtn" layoutX="494.0" layoutY="22.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="125.0" text="Requests" AnchorPane.topAnchor="30.0" />
-            <Label layoutX="20.0" layoutY="14.0" text="User Name" AnchorPane.topAnchor="10.0" />
+            <Button fx:id="addbtn" layoutX="259.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="31.0" prefWidth="75.0" text="Add" AnchorPane.topAnchor="28.0" />
+            <Button fx:id="requestbtn" layoutX="344.0" layoutY="28.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="75.0" text="Requests" AnchorPane.topAnchor="28.0" />
+            <Label layoutX="20.0" layoutY="14.0" text="User Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
             <Label layoutX="657.0" layoutY="14.0" text="Points" AnchorPane.topAnchor="10.0" />
+            <Button fx:id="updateWishList" layoutX="426.0" layoutY="28.0" mnemonicParsing="false" onAction="#updateWishListAction" prefHeight="31.0" prefWidth="110.0" text="Update WishList" />
+            <Button layoutX="545.0" layoutY="28.0" mnemonicParsing="false" onAction="#addPointsAction" prefHeight="31.0" prefWidth="81.0" text="Add points" />
          </children>
       </AnchorPane>
       <VBox layoutX="14.0" layoutY="75.0" prefHeight="469.0" prefWidth="518.0" styleClass="vbox" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="78.0">
@@ -27,7 +29,6 @@
             <AnchorPane prefHeight="49.0" prefWidth="297.0">
                <children>
                   <Text fx:id="myWishListtxt" layoutX="207.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="My Wish List" textAlignment="CENTER" />
-                  <Button fx:id="updateWishList" layoutX="408.0" layoutY="4.0" mnemonicParsing="false" onAction="#updateWishListAction" prefHeight="42.0" prefWidth="110.0" text="Update WishList" />
                </children>
             </AnchorPane>
             <TableView fx:id="WishListTable" prefHeight="419.0" prefWidth="518.0">

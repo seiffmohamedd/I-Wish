@@ -201,9 +201,10 @@ public class ProfileViewController implements Initializable {
         
     }
     
-//sssssssssssssssssssssss
+
 
     @FXML
     private void addPointsAction(ActionEvent event) {
+        new LoadView(event, "CreditCardView");
     }
 }
