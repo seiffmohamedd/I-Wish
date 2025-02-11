@@ -127,6 +127,10 @@ public class User implements Serializable{
         return points;
     }
 
+    public static void setPoints(int points) {
+        User.points = points;
+    }
+    
     public static JSONArray getWishList() {
         return WishList;
     }

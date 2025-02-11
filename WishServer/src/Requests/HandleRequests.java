@@ -2,6 +2,7 @@ package Requests;
 //sssssssssssss
 import DAL.AddFriend;
 import DAL.AddItemToUserWish;
+import DAL.AddPointstoUser;
 import DAL.FriendsList;
 import DAL.GetItemLike;
 import DAL.GetNotification;
@@ -9,6 +10,7 @@ import DAL.Login;
 import DAL.RemoveWishItem;
 import DAL.SignUp;
 import DAL.WishListItem;
+import DBO.ChargePoints;
 import DBO.Friends;
 import DBO.Items;
 import DBO.Notification;
@@ -197,6 +199,23 @@ public class HandleRequests {
                         break;
                     case 0:
                         HandlingResult = "Fail";
+                        break;
+                    
+                }
+                break;
+                
+            case "ChargePoints":
+                ChargePoints chargePointsdata = new ChargePoints(userRequest);
+                AddPointstoUser addPoints = new AddPointstoUser(chargePointsdata);
+                switch (addPoints.getExecuteResult()) {
+                    case 1:
+                        HandlingResult = "Success";
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break;
+                    case -5:
+                        HandlingResult = "inValidCreditCardData";
                         break;
                     
                 }
