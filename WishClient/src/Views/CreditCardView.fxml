@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreditCardViewController">
+   <children>
+      <Label layoutX="36.0" layoutY="34.0" text="Current Points" />
+      <TextField fx:id="currentPointsTxfield" editable="false" layoutX="36.0" layoutY="58.0" promptText="Current points" />
+      <TextField fx:id="CreditCardNumTxtfield" layoutX="36.0" layoutY="140.0" prefHeight="25.0" prefWidth="321.0" />
+      <DatePicker fx:id="ValidtoDataField" layoutX="36.0" layoutY="188.0" prefHeight="25.0" prefWidth="321.0" />
+      <TextField fx:id="HolderNameTxtField" layoutX="38.0" layoutY="240.0" prefHeight="25.0" prefWidth="321.0" />
+      <TextField fx:id="CVVTxtField" layoutX="387.0" layoutY="188.0" prefHeight="25.0" prefWidth="76.0" />
+      <TextField fx:id="numberOfPointsToChargeTxtField" layoutX="38.0" layoutY="289.0" prefHeight="25.0" prefWidth="117.0" />
+      <Button layoutX="159.0" layoutY="342.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="25.0" prefWidth="59.0" text="Back" />
+      <Button layoutX="339.0" layoutY="342.0" mnemonicParsing="false" onAction="#ConfirmbtnAction" text="Confirm" />
+      <Label layoutX="38.0" layoutY="116.0" text="Credit Card Number" />
+      <Label layoutX="38.0" layoutY="168.0" text="Valid to" />
+      <Label layoutX="387.0" layoutY="168.0" text="CVV" />
+      <Label layoutX="38.0" layoutY="217.0" text="Holder Name" />
+      <Label layoutX="40.0" layoutY="269.0" text="Number of points to Charge" />
+   </children>
+</AnchorPane>
