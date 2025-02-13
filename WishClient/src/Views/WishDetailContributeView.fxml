@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.WishDetailContributeViewController">
+   <children>
+      <Text layoutX="272.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contribute" />
+      <TextField fx:id="NameTxtxField" editable="false" layoutX="158.0" layoutY="93.0" prefHeight="25.0" prefWidth="284.0" />
+      <TextField fx:id="priceTextField" editable="false" layoutX="158.0" layoutY="147.0" prefHeight="25.0" prefWidth="284.0" />
+      <TextField fx:id="RemainTxtField" editable="false" layoutX="158.0" layoutY="200.0" prefHeight="25.0" prefWidth="284.0" />
+      <Label layoutX="158.0" layoutY="76.0" text="Name" />
+      <Label layoutX="158.0" layoutY="130.0" text="Price" />
+      <Label layoutX="158.0" layoutY="183.0" text="Remain" />
+      <TextField fx:id="ContributeTxtField" layoutX="158.0" layoutY="261.0" prefHeight="25.0" prefWidth="133.0" />
+      <Button layoutX="329.0" layoutY="261.0" mnemonicParsing="false" onAction="#ContributeAction" prefHeight="25.0" prefWidth="113.0" text="Contribute" />
+      <Label layoutX="158.0" layoutY="244.0" text="Contribute" />
+      <Button layoutX="158.0" layoutY="307.0" mnemonicParsing="false" onAction="#FullContributeAction" prefHeight="25.0" prefWidth="284.0" text="Full Contribute" />
+      <TextField fx:id="AvailablePointsTxtField" editable="false" layoutX="423.0" layoutY="35.0" prefHeight="25.0" prefWidth="133.0" />
+      <Label layoutX="448.0" layoutY="14.0" text="Available Points" />
+   </children>
+</AnchorPane>

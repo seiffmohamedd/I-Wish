@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -10,5 +12,13 @@
       <TextField fx:id="pointsTxtFields" layoutX="437.0" layoutY="38.0" promptText="userName" AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0" />
       <Label layoutX="437.0" layoutY="22.0" text="Available Points" AnchorPane.leftAnchor="441.0" AnchorPane.topAnchor="10.0" />
       <TextField fx:id="userNameTxtField" layoutX="14.0" layoutY="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0" />
+      <TableView fx:id="WishListTable" layoutX="10.0" layoutY="87.0" prefHeight="296.0" prefWidth="582.0">
+        <columns>
+          <TableColumn fx:id="ItemNameCol" prefWidth="165.0" text="Item Name" />
+          <TableColumn fx:id="priceCol" prefWidth="74.0" text="Price" />
+            <TableColumn fx:id="RemainCol" prefWidth="74.0" text="Remain" />
+            <TableColumn fx:id="DescriptionCol" prefWidth="268.0" text="Description" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

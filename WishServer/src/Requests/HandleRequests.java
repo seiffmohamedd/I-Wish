@@ -7,10 +7,12 @@ import DAL.FriendsList;
 import DAL.GetItemLike;
 import DAL.GetNotification;
 import DAL.Login;
+import DAL.MakeContribute;
 import DAL.RemoveWishItem;
 import DAL.SignUp;
 import DAL.WishListItem;
 import DBO.ChargePoints;
+import DBO.ContributeData;
 import DBO.Friends;
 import DBO.Items;
 import DBO.Notification;
@@ -218,6 +220,31 @@ public class HandleRequests {
                         HandlingResult = "inValidCreditCardData";
                         break;
                     
+                }
+                break;
+            case "Contribute":
+                ContributeData CD = new ContributeData(userRequest);
+                MakeContribute MC = new MakeContribute(CD);
+                switch (MC.getExecuteResult()) {
+                    case 1:
+                        HandlingResult = "Success";
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break; 
+                }
+                break;
+            case "GETWISHLIST":
+           
+                WishListItem FWL = new WishListItem(userRequest.getString("userName"));
+                switch (FWL.getExecuteResult()) {
+                    case 1:
+//                      HandlingResult = "Success";
+                        HandlingResult = FWL.getUserWishListItemsArr().toString();
+                        break;
+                    case 0:
+                        HandlingResult = "Fail";
+                        break; 
                 }
                 break;
         }

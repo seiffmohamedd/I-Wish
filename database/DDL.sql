@@ -58,12 +58,12 @@ CREATE TABLE wishListItemContribute (
     itemID INT,
     friendUserName VARCHAR(20),
     contributeAmount NUMBER(8,2),
-    PRIMARY KEY (userName, itemID, friendUserName),
+    timeStamp TIMESTAMP Default CURRENT_TIMESTAMP,
+    PRIMARY KEY (userName, itemID, friendUserName,timeStamp),
     FOREIGN KEY (userName) REFERENCES Person(userName) ON DELETE CASCADE,
     FOREIGN KEY (itemID) REFERENCES Item(itemID) ON DELETE CASCADE,
     FOREIGN KEY (friendUserName) REFERENCES Person(userName) ON DELETE CASCADE
 );
-
 
 CREATE TABLE CreditCard (
     creditCardNumber VARCHAR(16) PRIMARY KEY,
