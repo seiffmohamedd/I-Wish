@@ -15,9 +15,9 @@ public class AddFriend {
                              "WHERE USERNAME LIKE ? " +
                              "AND USERNAME != ? " +
                              "AND USERNAME NOT IN (" +
-                             "    SELECT FRIENDUSERNAME FROM PERSONFRIENDS " +
-                             "    WHERE PERSONUSERNAME = ? " +
-                             "    AND STATUS IN ('Accepted', 'Pending')" +
+                             "    SELECT PERSONUSERNAME FROM PERSONFRIENDS WHERE FRIENDUSERNAME = ? AND STATUS IN ('Accepted', 'Pending') " +
+                             "    UNION " +
+                             "    SELECT FRIENDUSERNAME FROM PERSONFRIENDS WHERE PERSONUSERNAME = ? AND STATUS IN ('Accepted', 'Pending')" +
                              ")";
 
     private int executeResult;
@@ -50,6 +50,7 @@ public class AddFriend {
         statement.setString(1, "%" + searchQuery + "%"); 
         statement.setString(2, userName);  
         statement.setString(3, userName);  
+        statement.setString(4, userName);  
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {

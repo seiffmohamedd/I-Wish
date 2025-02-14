@@ -207,4 +207,9 @@ public class ProfileViewController implements Initializable {
     private void addPointsAction(ActionEvent event) {
         new LoadView(event, "CreditCardView");
     }
+
+    @FXML
+    private void rqstBtnAction(ActionEvent event) {
+        new LoadView(event, "FriendRequest");
+    }
 }

@@ -9,7 +9,10 @@ import java.util.ArrayList;
 
 public class FriendsList {
     private final Connection DBCon;
-    private final String query = "SELECT FRIENDUSERNAME FROM PERSONFRIENDS WHERE PERSONUSERNAME = ? AND STATUS = 'Accepted'";
+    private final String query = 
+    "SELECT PERSONUSERNAME AS Friend FROM PERSONFRIENDS WHERE FRIENDUSERNAME = ? AND STATUS = 'Accepted' " +
+    "UNION " +
+    "SELECT FRIENDUSERNAME AS Friend FROM PERSONFRIENDS WHERE PERSONUSERNAME = ? AND STATUS = 'Accepted'";
     private int executeResult;
     private String userName;
     private ArrayList<Friends> userFriendsListArr = new ArrayList<>();
@@ -67,10 +70,11 @@ public class FriendsList {
     private void getFriends() throws SQLException {
         PreparedStatement statement = DBCon.prepareStatement(query);
         statement.setString(1, userName);
+        statement.setString(2, userName); 
         ResultSet rs = statement.executeQuery();
 
         while (rs.next()) {
-            Friends tempFriend = new Friends(userName, rs.getString("FRIENDUSERNAME"));
+            Friends tempFriend = new Friends(userName, rs.getString("Friend"));
             System.out.println("Friend found: " + tempFriend.getFriendUserName());
             userFriendsListArr.add(tempFriend);
             executeResult = 1;

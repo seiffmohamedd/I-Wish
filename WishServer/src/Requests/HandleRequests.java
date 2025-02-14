@@ -3,6 +3,7 @@ package Requests;
 import DAL.AddFriend;
 import DAL.AddItemToUserWish;
 import DAL.AddPointstoUser;
+import DAL.FriendRequest;
 import DAL.FriendsList;
 import DAL.GetItemLike;
 import DAL.GetNotification;
@@ -16,6 +17,7 @@ import DBO.ContributeData;
 import DBO.Friends;
 import DBO.Items;
 import DBO.Notification;
+import DBO.PersonFriends;
 import org.json.JSONException;
 import org.json.JSONObject;
 import DBO.User;
@@ -247,6 +249,41 @@ public class HandleRequests {
                         break; 
                 }
                 break;
+                case "getFriendRequests":
+                FriendRequest friendRequestHandler = new FriendRequest(userRequest.getString("friendUserName"));
+                ArrayList<PersonFriends> friendRequests = friendRequestHandler.getPersonFriendsArr();
+
+                if (friendRequests.isEmpty()) {
+                    HandlingResult = "No friend requests found";
+                } else {
+                    JSONArray friendRequestsArray = new JSONArray();
+                    for (PersonFriends request : friendRequests) {
+                        friendRequestsArray.put(request.getPersonUserName());
+                    }
+                    HandlingResult = friendRequestsArray.toString();
+                }
+                break;
+
+            case "updateFriendRequest":
+                String personUserName = userRequest.getString("personUserName");
+                String friendUserName = userRequest.getString("friendUserName");
+                String myStatus = userRequest.getString("status");
+
+                FriendRequest friendRequestUpdateHandler = new FriendRequest(friendUserName);
+                boolean updateSuccess;
+
+                if ("Accepted".equalsIgnoreCase(myStatus)) {
+                    updateSuccess = friendRequestUpdateHandler.acceptFriendRequest(personUserName, friendUserName);
+                } else if ("Declined".equalsIgnoreCase(myStatus)) {
+                    updateSuccess = friendRequestUpdateHandler.declineFriendRequest(personUserName, friendUserName);
+                } else {
+                    HandlingResult = "Invalid status";
+                    break;
+                }
+
+                HandlingResult = updateSuccess ? "Success" : "Failed to update friend request";
+                break;
+
         }
     }
 }
