@@ -80,10 +80,12 @@ public class UpdateWishListViewController implements Initializable {
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-
+                System.out.println("the user wish list is :" +jsonObject.toString() );
                 String itemName = jsonObject.getString("itemName");
                 int ItemID = jsonObject.getInt("ItemID");
-                wishListData.add(new WishList(ItemID, itemName));
+                double price = jsonObject.getDouble("price");
+                double remaining = jsonObject.getDouble("remaining");
+                wishListData.add(new WishList(ItemID, itemName,"",price,remaining));
             } catch (JSONException ex) {
                 dg.showDialog("ERROR", "ERROR in data retrieval", "ERROR");
             }
@@ -139,11 +141,12 @@ public class UpdateWishListViewController implements Initializable {
                 int itemID = jsonObject.getInt("itemID");
                 String itemName = jsonObject.getString("itemName");
                 double itemPrice = jsonObject.getDouble("itemPrice");
-
+                double remaining = itemPrice;
                 String itemDescription = jsonObject.getString("itemDescription");
 
                 // Add extracted data to the ObservableList
-                addItemsList.add(new WishList(itemID, itemName, itemPrice, itemDescription));
+//                addItemsList.add(new WishList(itemID, itemName, itemPrice, itemDescription));
+                addItemsList.add(new WishList(itemID, itemName, itemDescription, itemPrice, remaining)); 
             } catch (JSONException ex) {
                 dg.showDialog("ERROR", "Error in data retrieval", "ERROR");
             }
@@ -179,18 +182,21 @@ public class UpdateWishListViewController implements Initializable {
                                 WishList data = getTableView().getItems().get(getIndex());
                                 System.out.println("Removed Item: " + data.getItemName());
                                 System.out.println("Removed Item id : " + data.getItemid());
+                                System.out.println("Removed Item contribution : " + (data.getPrice() - data.getRemaining()));
                                 WishitemRemove wishRemove = new WishitemRemove(data.getItemid(), User.getUserName());
                                 JSONObject removeItemReq = new JSONObject(wishRemove);
                                 removeItemReq.put("Command", "RemoveWishListItem");
                                 System.out.println("the requests sends is : " + removeItemReq);
-                              
+                                System.out.println(data.toString());
                                 socket.getDOS().println(removeItemReq);
                                 socket.getDOS().flush(); // Ensure data is sent
                                 
                                 if ("Success".equals(socket.getDIS().readLine())) {
                                    dg.showDialog("Item Remove", "Item remove Successfully", "CONFIRMATION");
                                    wishListData.remove(data); // Remove from ViewMyItemsTable
-                                   AddtoMyItemsTable.getItems().add(data); // Add to AddtoMyItemsTable
+                                   User.setPoints((int) (User.getPoints() + (data.getPrice() - data.getRemaining())));
+//                                   AddtoMyItemsTable.getItems().add(data); // Add to AddtoMyItemsTable
+                                   
                                 } else {
                                     dg.showDialog("Item Remove", "Failed to Remove Item ", "ERROR");
                                 }
