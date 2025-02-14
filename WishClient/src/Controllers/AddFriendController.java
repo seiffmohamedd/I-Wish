@@ -171,6 +171,12 @@ public class AddFriendController implements Initializable {
             String response = socket.getDIS().readLine();
 
             System.out.println("Friend request response: " + response);
+            
+            if ("Success".equalsIgnoreCase(response)) {
+            new Dialog().showDialog("Friend Request", "Friend request sent to " + friendUsername + "!", "INFORMATION");
+        } else {
+            new Dialog().showDialog("Friend Request Failed", "Could not send friend request. Try again later.", "ERROR");
+        }
         } catch (IOException | JSONException ex) {
             Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
         }

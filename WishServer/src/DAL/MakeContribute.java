@@ -21,6 +21,8 @@ public class MakeContribute {
     private final String query1 = "UPDATE WISHLISTITEM SET REMAINING = ? WHERE UserName = ? AND ITEMID = ?";
     private final String query2 = "insert into WISHLISTITEMCONTRIBUTE(USERNAME,ITEMID,FRIENDUSERNAME,CONTRIBUTEAMOUNT) values(?,?,?,?)";
     private final String query3 = "UPDATE PERSON SET POINTS = POINTS - ? WHERE USERNAME = ?";
+    private final String query4 = "INSERT INTO NOTIFICATIONS (USERNAME, MESSAGE, STATUS) VALUES (?, ?, 'Unread')";
+    
     private int executeResult;
     public MakeContribute(ContributeData RequestData) throws SQLException{
         this.RequestData = RequestData;
@@ -29,6 +31,7 @@ public class MakeContribute {
         updateRemaining();
         insertContribution();
         subtractPoints();
+        insertNotification();
         DBCon.close();
     }
     
@@ -73,6 +76,16 @@ public class MakeContribute {
         }
          
      }
+     private void insertNotification() throws SQLException {
+        if (executeResult == 1) {  
+            PreparedStatement statement = DBCon.prepareStatement(query4);
+            String message = RequestData.getUserName() + " contributed " + RequestData.getContributionAmount() + " for your item (ID: " + RequestData.getItemID() + ")";
+            statement.setString(1, RequestData.getFirendUserName());
+            statement.setString(2, message);
+            int notificationResult = statement.executeUpdate();
+            System.out.println("Execution result for insertNotification: " + notificationResult);
+        }
+    }
     
      
 }
