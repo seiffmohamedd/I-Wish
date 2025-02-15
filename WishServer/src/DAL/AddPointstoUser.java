@@ -17,27 +17,22 @@ import java.sql.SQLException;
  */
 public class AddPointstoUser {
     private ChargePoints RequestData;
-    private final Connection DBCon;
-     private final String query1 = "Select count(*) as count from CREDITCARD where userName = ? and CREDITCARDNUMBER = ? and CVV = ? ";
+    private Connection DBCon = DBConnection.getConnection();
+    private final String query1 = "Select count(*) as count from CREDITCARD where userName = ? and CREDITCARDNUMBER = ? and CVV = ? ";
     private final String query2 = "update PERSON set Points = Points + ? where userName = ? ";
     private int executeResult;
     
     public AddPointstoUser(ChargePoints RequestData) throws SQLException{
         this.RequestData = RequestData;
-        DBCon = establishConnection();
         if(ValidateCreditCard(query1) == 1){
             addPoints(query2);
-            DBCon.close();
+           
         }else{
             executeResult = -5;
-            DBCon.close();
+           
         }
     }
-    
-    private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
-    }
-    
+
     public int getExecuteResult() {
         return executeResult;
     }

@@ -20,23 +20,19 @@ import org.json.JSONObject;
  * @author Windo
  */
 public class GetItemLike {
-    private final Connection DBCon;
+    private Connection DBCon = DBConnection.getConnection();
     private JSONObject userRequest;
     private final String query = "SELECT * from Item where lower(ITEMNAME) like ? and itemID not in (select ITEMID from WISHLISTITEM where USERNAME =  ?)";
     private int executeResult;
     private ArrayList<Items> ItemsList = new ArrayList<>();
     
     public GetItemLike(JSONObject userRequest) throws SQLException, JSONException {
-        DBCon = establishConnection();
+      
         this.userRequest = userRequest;  
         getItems(query);
-        DBCon.close();
+
     }
 
-
-    private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
-    }
 
     public int getExecuteResult() {
         return executeResult;

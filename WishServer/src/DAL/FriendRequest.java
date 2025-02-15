@@ -13,24 +13,16 @@ import java.util.ArrayList;
  * @author Lenovo
  */
 public class FriendRequest {
-    private final Connection DBCon;
+   private Connection DBCon = DBConnection.getConnection();
     private final String query = "select personUserName from personFriends where friendUserName = ? and status = 'Pending'";
     private int executeResult;
     private String userName;
     private ArrayList<PersonFriends> personFriends = new ArrayList<>();
 
     public FriendRequest(String userName) throws SQLException {
-        DBCon = establishConnection();
         this.userName = userName;
         System.out.println("Fetching friends list for user: " + userName);
-        getPersonFriends();
-//        DBCon.close();
-    }
-     public FriendRequest(Friends friendRequest) throws SQLException {
-        DBCon = establishConnection();
-    }
-      private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
+        getPersonFriends();       
     }
 
     public int getExecuteResult() {

@@ -17,7 +17,7 @@ import java.sql.SQLException;
  */
 public class RemoveWishItem {
     private WishitemRemove itemremove;
-    private final Connection DBCon;
+   private Connection DBCon = DBConnection.getConnection();
     private final String query1 = "select sum(CONTRIBUTEAMOUNT) as sum_point from WISHLISTITEMCONTRIBUTE where FRIENDUSERNAME = ? and ITEMID = ?";
     private final String query2 = "UPDATE PERSON SET POINTS = POINTS + ? WHERE USERNAME = ?";
     private final String query = "Delete from WISHLISTITEM where username = ? and ITEMID = ? ";
@@ -25,16 +25,13 @@ public class RemoveWishItem {
     private int contributionPoint;
     public RemoveWishItem(WishitemRemove itemremove) throws SQLException{
         this.itemremove = itemremove;
-        DBCon = establishConnection();
+        
         getContributionPoints(query1);
         addPointsToUser(query2);
         removeitem(query);
-        DBCon.close();
+
     }
     
-    private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
-    }
     
     public int getExecuteResult() {
         return executeResult;

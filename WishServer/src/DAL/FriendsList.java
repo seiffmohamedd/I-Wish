@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FriendsList {
-    private final Connection DBCon;
+    private Connection DBCon = DBConnection.getConnection();
     private final String query = 
     "SELECT PERSONUSERNAME AS Friend FROM PERSONFRIENDS WHERE FRIENDUSERNAME = ? AND STATUS = 'Accepted' " +
     "UNION " +
@@ -18,21 +18,16 @@ public class FriendsList {
     private ArrayList<Friends> userFriendsListArr = new ArrayList<>();
 
     public FriendsList(String userName) throws SQLException {
-        DBCon = establishConnection();
+       
         this.userName = userName;
         System.out.println("Fetching friends list for user: " + userName);
         getFriends();
-        DBCon.close();
     }
      public FriendsList(Friends friendRequest) throws SQLException {
-        DBCon = establishConnection();
         sendFriendRequest(friendRequest);
-        DBCon.close();
+       
     }
 
-    private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
-    }
 
     public int getExecuteResult() {
         return executeResult;

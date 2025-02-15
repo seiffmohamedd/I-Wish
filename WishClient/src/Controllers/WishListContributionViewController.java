@@ -52,6 +52,8 @@ public class WishListContributionViewController implements Initializable {
     @FXML
     private TableColumn<WishList, String> DescriptionCol;
     private ObservableList<WishList> wishListData = FXCollections.observableArrayList();
+    @FXML
+    private Label userName;
 
     
     public void setFriendUserName(String friendUserName) {
@@ -97,6 +99,9 @@ public class WishListContributionViewController implements Initializable {
             SetSocket socket = new SetSocket();
             socket.getDOS().println(request);
             String respond = socket.getDIS().readLine();
+            if (respond == null || respond.trim().isEmpty() || respond.trim().equals("[]") || respond.trim().equals("Fail") ) {
+                return;
+            }
             updateTableFrom(new JSONArray(respond));
         } catch (JSONException | IOException ex) {
             Logger.getLogger(WishListContributionViewController.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,7 +129,6 @@ public class WishListContributionViewController implements Initializable {
                 
                 wishListData.add(new WishList(itemid, itemName, itemDescription, price, remaining));
             } catch (JSONException ex) {
-                System.err.println(ex);
                 dg.showDialog("ERROR", "ERROR in data retrival", "ERROR");
             }
         }

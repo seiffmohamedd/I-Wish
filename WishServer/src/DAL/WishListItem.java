@@ -18,22 +18,19 @@ import java.util.ArrayList;
  * @author Windo
  */
 public class WishListItem {
-    private final Connection DBCon;
+    private Connection DBCon = DBConnection.getConnection();
     private final String query = "select w.remaining,I.ITEMID, I.ITEMNAME,I.ITEMPRICE, I.ITEMDESCRIPTION from wishlistitem w, item i where w.ITEMID = i.ITEMID and w.userName =  ?";
     private int executeResult;
     private String UserName;
     private ArrayList<WishList> userWishListItemsArr = new ArrayList<>();
     public WishListItem(String UserName) throws SQLException{
-        DBCon = establishConnection();
+
         this.UserName = UserName;
         System.out.println("the username is : " + UserName);
         getWishList();
-        DBCon.close();
+        
     }
-    
-    private Connection establishConnection() throws SQLException{
-        return new DBConnection().getConection();
-    }
+
     public int getExecuteResult() {
         return executeResult;
     }

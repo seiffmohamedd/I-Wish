@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AddFriend {
-    private final Connection DBCon;
+    private Connection DBCon = DBConnection.getConnection();
 //    private final String query = "SELECT USERNAME FROM PERSON WHERE USERNAME LIKE ? AND USERNAME != ?";
  private final String query = "SELECT USERNAME FROM PERSON " +
                              "WHERE USERNAME LIKE ? " +
@@ -24,19 +24,11 @@ public class AddFriend {
     private String userName;
     private ArrayList<User> users = new ArrayList<>();
 
-    public AddFriend(String userName, String searchQuery) throws SQLException {
-        DBCon = establishConnection();
+    public AddFriend(String userName, String searchQuery) throws SQLException { 
         this.userName = userName;  
         System.out.println("Fetching users based on search query: " + searchQuery);
         getUsers(searchQuery); 
-        DBCon.close();
     }
-
-
-    private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
-    }
-
     public int getExecuteResult() {
         return executeResult;
     }

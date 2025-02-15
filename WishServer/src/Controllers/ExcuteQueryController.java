@@ -23,7 +23,7 @@ public class ExcuteQueryController {
     private TableView<ObservableList<String>> resultTable;
 
 
-    private final DBConnection dbConnection = new DBConnection(); 
+    private Connection conn = DBConnection.getConnection();
     private final Dialog dialog = new Dialog(); 
 
     @FXML
@@ -36,7 +36,7 @@ private void executeQuery() {
         return;
     }
 
-    try (Connection conn = dbConnection.getConection();
+    try (
          Statement stmt = conn.createStatement()) {
 
         String lowerQuery = query.toLowerCase();

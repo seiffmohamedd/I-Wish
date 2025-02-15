@@ -20,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +53,12 @@ public class UpdateWishListViewController implements Initializable {
     private TableColumn<WishList, Double> PriceCol;
     @FXML
     private TableColumn<WishList, String> DescriptionCol;
+    @FXML
+    private Text updateYourWishList;
+    @FXML
+    private Button searchbtn;
+    @FXML
+    private Button backbtn;
 
     /**
      * Initializes the controller class.

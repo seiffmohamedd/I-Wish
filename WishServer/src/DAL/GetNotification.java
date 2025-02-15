@@ -18,18 +18,18 @@ import java.util.ArrayList;
  * @author Windo
  */
 public class GetNotification {
-    private final Connection DBCon;
+    private Connection DBCon = DBConnection.getConnection();
     private final String query = "select NotificationText, TIMESTAMP, USERNAME from Notification where UserName = ?  order by TIMESTAMP DESC";
     private int executeResult;
     private String UserName;
     private ArrayList<Notification> userNotificationtsArr = new ArrayList<>();
     
     public GetNotification(String UserName) throws SQLException{
-        DBCon = establishConnection();
+      
         this.UserName = UserName;
         System.out.println("the username for Notifications is : " + UserName);
         getNotification();
-        DBCon.close();
+
     }
 
     public int getExecuteResult() {
@@ -40,10 +40,6 @@ public class GetNotification {
         return userNotificationtsArr;
     }
     
-    
-    private Connection establishConnection() throws SQLException{
-        return new DBConnection().getConection();
-    }
     
     private void getNotification() throws SQLException {
         PreparedStatement statement = DBCon.prepareStatement(query);

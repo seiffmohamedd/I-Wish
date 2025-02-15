@@ -20,22 +20,17 @@ import java.text.SimpleDateFormat;
  */
 public class Login {
     private User user;
-    private Connection DBCon;
     private String ifUserExistsQuery = "SELECT * FROM PERSON WHERE USERNAME = ? and PASSWORD = ?";
-    
+    private Connection DBCon = DBConnection.getConnection();
     private int executeResult;
     public Login(User user) throws SQLException, ParseException{
         this.user = user;
-        DBCon = establishConnection();
+       
 //        System.out.println("db connection established");
         executeResult = getLogInResponse();
-        DBCon.close();
+       
     }
     
-    private Connection establishConnection() throws SQLException{
-        return new DBConnection().getConection();
-    }
-
     public int getExecuteResult() {
         return executeResult;
     }

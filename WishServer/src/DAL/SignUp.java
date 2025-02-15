@@ -18,27 +18,23 @@ import java.text.SimpleDateFormat;
  */
 public class SignUp {
     private final User user;
-    private final Connection DBCon;
+   private Connection DBCon = DBConnection.getConnection();
     private final String query = "insert into Person(userName, firstName, lastName,gender, password, birthDate,phone) values(?,?,?,?,?,?,?)";
     private final String ifUserExistsQuery = "SELECT COUNT(*) as isexist FROM PERSON WHERE USERNAME = ? ";
     private int executeResult;
     public SignUp(User user) throws SQLException, ParseException{
         this.user = user;
-        DBCon = establishConnection();
+
 //        System.out.println("db connection established");
         if(isExists()){
             executeResult = -5;
             System.out.println("user exists and exe result is " +executeResult );
-            DBCon.close();
+            
         }else{
             signUser();
-            DBCon.close();
+            
         }
 //        System.out.println("db connection closed");
-    }
-    
-    private Connection establishConnection() throws SQLException{
-        return new DBConnection().getConection();
     }
 
     public int getExecuteResult() {

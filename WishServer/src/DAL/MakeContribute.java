@@ -17,7 +17,7 @@ import java.sql.SQLException;
  */
 public class MakeContribute {
     private ContributeData RequestData;
-    private final Connection DBCon;
+    private Connection DBCon = DBConnection.getConnection();
     private final String query1 = "UPDATE WISHLISTITEM SET REMAINING = ? WHERE UserName = ? AND ITEMID = ?";
     private final String query2 = "insert into WISHLISTITEMCONTRIBUTE(USERNAME,ITEMID,FRIENDUSERNAME,CONTRIBUTEAMOUNT) values(?,?,?,?)";
     private final String query3 = "UPDATE PERSON SET POINTS = POINTS - ? WHERE USERNAME = ?";
@@ -26,18 +26,13 @@ public class MakeContribute {
     private int executeResult;
     public MakeContribute(ContributeData RequestData) throws SQLException{
         this.RequestData = RequestData;
-        DBCon = establishConnection();
         System.out.println("from MakeContribute constructors the data is :" + RequestData.toString());
         updateRemaining();
         insertContribution();
         subtractPoints();
         insertNotification();
-        DBCon.close();
     }
-    
-    private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
-    }
+
     
     public int getExecuteResult() {
         return executeResult;

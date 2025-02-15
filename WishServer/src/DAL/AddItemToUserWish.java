@@ -17,22 +17,16 @@ import org.json.JSONObject;
  * @author Windo
  */
 public class AddItemToUserWish {
-    private final Connection DBCon;
+    private Connection DBCon = DBConnection.getConnection();
     private JSONObject userrequest;
     private final String query = "insert into WISHLISTITEM values(?,?,?) ";
     private int executeResult;
     
     public AddItemToUserWish(JSONObject userRequest) throws SQLException, JSONException {
-        DBCon = establishConnection();
         this.userrequest = userRequest;
         executeResult = insertItem(query);
-        DBCon.close();
     }
 
-
-    private Connection establishConnection() throws SQLException {
-        return new DBConnection().getConection();
-    }
 
     public int getExecuteResult() {
         return executeResult;
