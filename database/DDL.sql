@@ -80,7 +80,7 @@ CREATE SEQUENCE notification_seq START WITH 1 INCREMENT BY 1;
 
 CREATE TABLE Notification (
     notificationID NUMBER,
-    timeStamp TIMESTAMP,
+    timeStamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     userName VARCHAR2(20),
     PRIMARY KEY (notificationID),
     FOREIGN KEY (userName) REFERENCES Person(userName) ON DELETE CASCADE

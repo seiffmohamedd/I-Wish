@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import wishclient.SetSocket;
 
 public class LoginViewController implements Initializable {
@@ -31,7 +32,7 @@ public class LoginViewController implements Initializable {
     @FXML
     private TextField usernameField;
     @FXML
-    private PasswordField passwordField;
+    private TextField passwordField;
 
     private Socket server;
     private DataInputStream inputData;
@@ -40,6 +41,16 @@ public class LoginViewController implements Initializable {
     private Button signInButton;
     @FXML
     private Button signUpButton;
+    @FXML
+    private Label logo;
+    @FXML
+    private Label welcome;
+    @FXML
+    private Label signinLable;
+    @FXML
+    private Label dontHaveAccountLabel;
+    @FXML
+    private Label orlabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

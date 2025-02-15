@@ -5,22 +5,47 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreditCardViewController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreditCardViewController">
    <children>
-      <Label layoutX="36.0" layoutY="34.0" text="Current Points" />
-      <TextField fx:id="currentPointsTxfield" editable="false" layoutX="36.0" layoutY="58.0" promptText="Current points" />
-      <TextField fx:id="CreditCardNumTxtfield" layoutX="36.0" layoutY="140.0" prefHeight="25.0" prefWidth="321.0" />
-      <DatePicker fx:id="ValidtoDataField" layoutX="36.0" layoutY="188.0" prefHeight="25.0" prefWidth="321.0" />
-      <TextField fx:id="HolderNameTxtField" layoutX="38.0" layoutY="240.0" prefHeight="25.0" prefWidth="321.0" />
-      <TextField fx:id="CVVTxtField" layoutX="387.0" layoutY="188.0" prefHeight="25.0" prefWidth="76.0" />
-      <TextField fx:id="numberOfPointsToChargeTxtField" layoutX="38.0" layoutY="289.0" prefHeight="25.0" prefWidth="117.0" />
-      <Button layoutX="159.0" layoutY="342.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="25.0" prefWidth="59.0" text="Back" />
-      <Button layoutX="339.0" layoutY="342.0" mnemonicParsing="false" onAction="#ConfirmbtnAction" text="Confirm" />
-      <Label layoutX="38.0" layoutY="116.0" text="Credit Card Number" />
-      <Label layoutX="38.0" layoutY="168.0" text="Valid to" />
-      <Label layoutX="387.0" layoutY="168.0" text="CVV" />
-      <Label layoutX="38.0" layoutY="217.0" text="Holder Name" />
-      <Label layoutX="40.0" layoutY="269.0" text="Number of points to Charge" />
+      <Label layoutX="156.0" layoutY="56.0" text="Current Points" textFill="#00b293">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <TextField fx:id="currentPointsTxfield" editable="false" layoutX="156.0" layoutY="81.0" prefHeight="27.0" prefWidth="108.0" promptText="Current points" style="-fx-border-color: #00B293; -fx-border-radius: 20; -fx-background-radius: 20;" />
+     <TextField fx:id="CreditCardNumTxtfield" layoutX="156.0" layoutY="153.0" prefHeight="25.0" prefWidth="448.0" style="-fx-border-color: #00B293;" text="xxxxxxxx" />
+
+      <DatePicker fx:id="ValidtoDataField" layoutX="156.0" layoutY="213.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #00B293;" />
+      <TextField fx:id="HolderNameTxtField" layoutX="156.0" layoutY="290.0" prefHeight="25.0" prefWidth="448.0" style="-fx-border-radius: #00B293; -fx-border-color: #00b293;" text="Add your full name " />
+      <TextField fx:id="CVVTxtField" alignment="CENTER" layoutX="386.0" layoutY="213.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #00B293;" text="xxxx" />
+      <TextField fx:id="numberOfPointsToChargeTxtField" layoutX="462.0" layoutY="364.0" prefHeight="27.0" prefWidth="149.0" style="-fx-border-color: #00B293; -fx-background-radius: 20; -fx-border-radius: 20;" text="Total Points" />
+      <Button layoutX="151.0" layoutY="423.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #00b293; -fx-background-radius: 20;" text="Back" />
+      <Button layoutX="415.0" layoutY="423.0" mnemonicParsing="false" onAction="#ConfirmbtnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #00b293; -fx-background-radius: 20;" text="Confirm" />
+      <Label layoutX="156.0" layoutY="127.0" text="Card Number" textFill="#00b293">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="159.0" layoutY="192.0" text="Valid to" textFill="#00b293">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="159.0" layoutY="266.0" text="Holder Name" textFill="#00b293">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="386.0" layoutY="192.0" text="CVV" textFill="#00b293">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="465.0" layoutY="340.0" text="Total of points to Charge" textFill="#00b293">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

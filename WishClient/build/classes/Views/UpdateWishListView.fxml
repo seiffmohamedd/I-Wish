@@ -5,27 +5,34 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="469.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.UpdateWishListViewController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.UpdateWishListViewController">
    <children>
-      <TableView fx:id="ViewMyItemsTable" layoutX="7.0" layoutY="40.0" prefHeight="196.0" prefWidth="587.0" AnchorPane.bottomAnchor="233.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="40.0">
+      <TableView fx:id="ViewMyItemsTable" layoutX="7.0" layoutY="50.0" prefHeight="197.0" prefWidth="540.0" AnchorPane.bottomAnchor="263.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0">
         <columns>
-          <TableColumn fx:id="ItemsInMyWishCol" prefWidth="479.0" text="Items" />
-            <TableColumn fx:id="RemoveCol" prefWidth="106.0" text="Remove" />
+          <TableColumn fx:id="ItemsInMyWishCol" prefWidth="270.0" style="-fx-background-color: #00B293;" text="Items" />
+            <TableColumn fx:id="RemoveCol" prefWidth="269.0" style="-fx-background-color: #00B293;" text="Remove" />
         </columns>
       </TableView>
-      <Text layoutX="257.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UpdateWish List" />
-      <TextField fx:id="ItemNameSearchTxt" layoutX="7.0" layoutY="241.0" prefHeight="25.0" prefWidth="288.0" promptText="itemName" AnchorPane.bottomAnchor="203.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="306.0" AnchorPane.topAnchor="241.0" />
-      <Button layoutX="300.0" layoutY="241.0" mnemonicParsing="false" onAction="#searchbtnAction" text="Search" />
-      <TableView fx:id="AddtoMyItemsTable" layoutX="6.0" layoutY="275.0" prefHeight="157.0" prefWidth="587.0" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="8.0">
+      <Text fill="#00b293" layoutX="333.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Your Wish List">
+         <font>
+            <Font name="Californian FB Bold" size="15.0" />
+         </font></Text>
+      <TextField fx:id="ItemNameSearchTxt" alignment="CENTER" layoutX="132.0" layoutY="251.0" prefHeight="27.0" prefWidth="426.0" promptText="Item Name" style="-fx-border-color: #00B293; -fx-background-radius: 20; -fx-border-radius: 20;" AnchorPane.bottomAnchor="224.0" AnchorPane.leftAnchor="132.0" AnchorPane.rightAnchor="242.0" AnchorPane.topAnchor="251.0" />
+      <Button layoutX="562.0" layoutY="254.0" mnemonicParsing="false" onAction="#searchbtnAction" prefHeight="25.0" prefWidth="108.0" style="-fx-background-radius: 20; -fx-background-color: #00B293;" text="Search" />
+      <TableView fx:id="AddtoMyItemsTable" layoutX="130.0" layoutY="288.0" prefHeight="157.0" prefWidth="587.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0">
          <columns>
-            <TableColumn fx:id="ItemstoAddCol" prefWidth="120.0" text="Items" />
-            <TableColumn fx:id="PriceCol" prefWidth="73.0" text="Price" />
-            <TableColumn fx:id="DescriptionCol" prefWidth="317.0" text="Description" />
-            <TableColumn fx:id="AddCol" prefWidth="76.0" text="Add" />
+            <TableColumn fx:id="ItemstoAddCol" prefWidth="120.0" style="-fx-background-color: #00B293;" text="Items" />
+            <TableColumn fx:id="PriceCol" prefWidth="171.0" style="-fx-background-color: #00B293;" text="Price" />
+            <TableColumn fx:id="DescriptionCol" prefWidth="246.0" style="-fx-background-color: #00B293;" text="Description" />
+            <TableColumn fx:id="AddCol" prefWidth="142.0" style="-fx-background-color: #00B293;" text="Add" />
          </columns>
       </TableView>
-      <Button layoutX="275.0" layoutY="430.0" mnemonicParsing="false" onAction="#backbtnAction" prefHeight="25.0" prefWidth="102.0" text="Back" AnchorPane.bottomAnchor="7.0" />
+      <Button layoutX="318.0" layoutY="461.0" mnemonicParsing="false" onAction="#backbtnAction" prefHeight="20.0" prefWidth="152.0" style="-fx-background-radius: 20; -fx-background-color: #00B293;" text="Back" AnchorPane.bottomAnchor="16.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
    </children>
 </AnchorPane>

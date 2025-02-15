@@ -21,7 +21,7 @@ public class MakeContribute {
     private final String query1 = "UPDATE WISHLISTITEM SET REMAINING = ? WHERE UserName = ? AND ITEMID = ?";
     private final String query2 = "insert into WISHLISTITEMCONTRIBUTE(USERNAME,ITEMID,FRIENDUSERNAME,CONTRIBUTEAMOUNT) values(?,?,?,?)";
     private final String query3 = "UPDATE PERSON SET POINTS = POINTS - ? WHERE USERNAME = ?";
-    private final String query4 = "INSERT INTO NOTIFICATIONS (USERNAME, MESSAGE, STATUS) VALUES (?, ?, 'Unread')";
+    private final String query4 = "INSERT INTO NOTIFICATION (USERNAME, NOTIFICATIONTEXT) VALUES (?, ?)";
     
     private int executeResult;
     public MakeContribute(ContributeData RequestData) throws SQLException{

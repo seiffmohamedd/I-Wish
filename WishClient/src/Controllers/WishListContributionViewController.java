@@ -62,7 +62,6 @@ public class WishListContributionViewController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @FXML
     public void initialize(URL location, ResourceBundle resources) {
         dg = new Dialog();
         pointsTxtFields.setText(String.valueOf(User.getPoints()));

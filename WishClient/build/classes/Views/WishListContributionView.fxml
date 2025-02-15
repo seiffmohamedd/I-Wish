@@ -5,19 +5,26 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.WishListContributionViewController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.WishListContributionViewController">
    <children>
-      <Label layoutX="29.0" layoutY="14.0" text="User Name" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-      <TextField fx:id="pointsTxtFields" layoutX="437.0" layoutY="38.0" promptText="userName" AnchorPane.leftAnchor="441.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0" />
-      <Label layoutX="437.0" layoutY="22.0" text="Available Points" AnchorPane.leftAnchor="441.0" AnchorPane.topAnchor="10.0" />
-      <TextField fx:id="userNameTxtField" layoutX="14.0" layoutY="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0" />
-      <TableView fx:id="WishListTable" layoutX="10.0" layoutY="87.0" prefHeight="296.0" prefWidth="582.0">
+      <Label layoutX="53.0" layoutY="10.0" text="User Name" textFill="#00b293" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <TextField fx:id="pointsTxtFields" layoutX="572.0" layoutY="38.0" prefHeight="27.0" prefWidth="218.0" promptText="userName" style="-fx-background-radius: 20; -fx-border-color: #00B293; -fx-border-radius: 20;" AnchorPane.leftAnchor="572.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0" />
+      <Label layoutX="572.0" layoutY="10.0" text="Available Points" textFill="#00b293" AnchorPane.leftAnchor="572.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <TextField fx:id="userNameTxtField" layoutX="41.0" layoutY="30.0" style="-fx-background-radius: 20; -fx-border-color: #00B293; -fx-border-radius: 20;" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="599.0" AnchorPane.topAnchor="30.0" />
+      <TableView fx:id="WishListTable" layoutX="130.0" layoutY="94.0" prefHeight="370.0" prefWidth="540.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="94.0">
         <columns>
-          <TableColumn fx:id="ItemNameCol" prefWidth="165.0" text="Item Name" />
-          <TableColumn fx:id="priceCol" prefWidth="74.0" text="Price" />
-            <TableColumn fx:id="RemainCol" prefWidth="74.0" text="Remain" />
-            <TableColumn fx:id="DescriptionCol" prefWidth="268.0" text="Description" />
+          <TableColumn fx:id="ItemNameCol" prefWidth="179.0" style="-fx-background-color: #00B293;" text="Item Name" />
+          <TableColumn fx:id="priceCol" prefWidth="124.0" style="-fx-background-color: #00B293;" text="Price" />
+            <TableColumn fx:id="RemainCol" prefWidth="128.0" style="-fx-background-color: #00B293;" text="Remain" />
+            <TableColumn fx:id="DescriptionCol" prefWidth="362.0" style="-fx-background-color: #00B293;" text="Description" />
         </columns>
       </TableView>
    </children>

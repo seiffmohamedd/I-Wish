@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -35,6 +36,10 @@ public class FriendRequestController implements Initializable {
     private ObservableList<PersonFriends> friendRequestsList = FXCollections.observableArrayList();
     private SetSocket socket;
     private Dialog dg; 
+    @FXML
+    private Label friendRequest;
+    @FXML
+    private Button backBtn;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

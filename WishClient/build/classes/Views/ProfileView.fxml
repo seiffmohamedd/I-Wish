@@ -7,53 +7,64 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" stylesheets="Styles/ProfileViewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ProfileViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ProfileViewController">
    <children>
-      <AnchorPane prefHeight="75.0" prefWidth="794.0" styleClass="anchor-pane" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane layoutX="14.0" prefHeight="67.0" prefWidth="800.0" styleClass="anchor-pane" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-14.0">
          <children>
-            <TextField fx:id="username" editable="false" layoutX="14.0" layoutY="23.0" prefHeight="26.0" prefWidth="123.0" promptText="user name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
-            <Button fx:id="friendbtn" layoutX="174.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="31.0" prefWidth="75.0" text="Friends" AnchorPane.topAnchor="28.0" />
-            <TextField fx:id="points" editable="false" layoutX="495.0" layoutY="23.0" prefHeight="26.0" prefWidth="123.0" promptText="Points" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
-            <Button fx:id="addbtn" layoutX="259.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="31.0" prefWidth="75.0" text="Add" AnchorPane.topAnchor="28.0" />
-            <Button fx:id="requestbtn" layoutX="344.0" layoutY="28.0" mnemonicParsing="false" onAction="#rqstBtnAction" prefHeight="31.0" prefWidth="75.0" text="Requests" AnchorPane.topAnchor="28.0" />
-            <Label layoutX="20.0" layoutY="14.0" text="User Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0" />
-            <Label layoutX="657.0" layoutY="14.0" text="Points" AnchorPane.topAnchor="10.0" />
-            <Button fx:id="updateWishList" layoutX="426.0" layoutY="28.0" mnemonicParsing="false" onAction="#updateWishListAction" prefHeight="31.0" prefWidth="110.0" text="Update WishList" />
-            <Button layoutX="545.0" layoutY="28.0" mnemonicParsing="false" onAction="#addPointsAction" prefHeight="31.0" prefWidth="81.0" text="Add points" />
+            <TextField fx:id="username" disable="true" editable="false" layoutY="30.0" opacity="0.79" prefHeight="26.0" prefWidth="123.0" promptText="username" style="-fx-background-radius: 20; -fx-border-color: #00B293; -fx-border-radius: 20;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0" />
+            <Button fx:id="friendbtn" layoutX="145.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleFriendsButton" prefHeight="31.0" prefWidth="75.0" style="-fx-background-radius: 20; -fx-background-color: #00B293;" text="Friends" AnchorPane.topAnchor="28.0" />
+            <TextField fx:id="points" disable="true" editable="false" layoutX="495.0" layoutY="23.0" opacity="0.66" prefHeight="26.0" prefWidth="123.0" promptText="Points" style="-fx-background-radius: 20; -fx-border-color: #00B293; -fx-border-radius: 20;" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="30.0" />
+            <Button fx:id="addbtn" layoutX="239.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleAddButton" prefHeight="31.0" prefWidth="75.0" style="-fx-background-radius: 20; -fx-background-color: #00B293;" text="Add" AnchorPane.topAnchor="28.0" />
+            <Button fx:id="requestbtn" layoutX="334.0" layoutY="28.0" mnemonicParsing="false" onAction="#rqstBtnAction" prefHeight="31.0" prefWidth="75.0" style="-fx-background-radius: 20; -fx-background-color: #00B293;" text="Requests" AnchorPane.topAnchor="28.0" />
+            <Label layoutX="8.0" layoutY="10.0" text="User Name" textFill="#00b293" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Button fx:id="updateWishList" layoutX="422.0" layoutY="28.0" mnemonicParsing="false" onAction="#updateWishListAction" prefHeight="31.0" prefWidth="110.0" style="-fx-background-radius: 20; -fx-background-color: #00B293;" text="Update WishList" />
+            <Button layoutX="547.0" layoutY="28.0" mnemonicParsing="false" onAction="#addPointsAction" style="-fx-background-radius: 20; -fx-background-color: #00B293;" text="Add points" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="547.0" AnchorPane.rightAnchor="172.0" AnchorPane.topAnchor="28.0" />
+            <Label layoutX="663.0" layoutY="10.0" text="Points" textFill="#00b293">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <VBox layoutX="14.0" layoutY="75.0" prefHeight="469.0" prefWidth="518.0" styleClass="vbox" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="78.0">
+      <VBox layoutX="14.0" layoutY="115.0" prefHeight="382.0" prefWidth="518.0" styleClass="vbox" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="115.0">
          <children>
-            <AnchorPane prefHeight="49.0" prefWidth="297.0">
-               <children>
-                  <Text fx:id="myWishListtxt" layoutX="207.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="My Wish List" textAlignment="CENTER" />
-               </children>
-            </AnchorPane>
-            <TableView fx:id="WishListTable" prefHeight="419.0" prefWidth="518.0">
+            <AnchorPane prefHeight="49.0" prefWidth="297.0" />
+            <TableView fx:id="WishListTable" prefHeight="444.0" prefWidth="518.0" VBox.vgrow="ALWAYS">
+
+
               <columns>
-                <TableColumn fx:id="ItemNameCol" prefWidth="119.0" text="Item Name" />
-                <TableColumn fx:id="ItemPriceCol" prefWidth="93.0" text="Item Price" />
-                  <TableColumn fx:id="RemainingCol" prefWidth="134.0" text="Item RemaingingPrice" />
-                  <TableColumn fx:id="DescriptionCol" minWidth="0.0" prefWidth="171.0" text="Description" />
+                <TableColumn fx:id="ItemNameCol" prefWidth="119.0" style="-fx-background-color: #00B293;" text="Item Name" />
+                <TableColumn fx:id="ItemPriceCol" prefWidth="93.0" style="-fx-background-color: #00B293;" text="Item Price" />
+                  <TableColumn fx:id="RemainingCol" prefWidth="134.0" style="-fx-background-color: #00B293;" text="Item RemaingingPrice" />
+                  <TableColumn fx:id="DescriptionCol" minWidth="0.0" prefWidth="171.0" style="-fx-background-color: #00B293;" text="Description" />
               </columns>
             </TableView>
          </children>
       </VBox>
-      <VBox layoutX="529.0" layoutY="78.0" prefHeight="469.0" prefWidth="270.0" styleClass="vbox" AnchorPane.leftAnchor="529.0" AnchorPane.rightAnchor="3.0">
+      <VBox layoutX="529.0" layoutY="115.0" prefHeight="382.0" prefWidth="268.0" styleClass="vbox" AnchorPane.leftAnchor="529.0" AnchorPane.rightAnchor="3.0">
          <children>
-            <AnchorPane prefHeight="49.0" prefWidth="297.0">
-               <children>
-                  <Text fx:id="notificationtxt" layoutX="72.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="Notifications" textAlignment="CENTER" wrappingWidth="128.2017822265625" />
-               </children>
-            </AnchorPane>
-            <TableView fx:id="NotificationTable" prefHeight="419.0" prefWidth="270.0">
+            <AnchorPane prefHeight="37.0" prefWidth="268.0" />
+            <TableView fx:id="NotificationTable" prefHeight="442.0" prefWidth="268.0">
               <columns>
-                <TableColumn fx:id="NotificationTextCol" prefWidth="267.0" text="Notification Text" />
+                <TableColumn fx:id="NotificationTextCol" prefWidth="267.0" style="-fx-background-color: #00B293;" text="Notification Text" />
               </columns>
             </TableView>
          </children>
       </VBox>
+      <Label layoutX="205.0" layoutY="78.0" prefHeight="26.0" prefWidth="134.0" text="My Wish List" textFill="#00b293">
+         <font>
+            <Font name="Californian FB Bold" size="21.0" />
+         </font>
+      </Label>
+      <Label layoutX="603.0" layoutY="78.0" text="Notifications" textFill="#00b293">
+         <font>
+            <Font name="Californian FB Bold" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
