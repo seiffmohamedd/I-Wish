@@ -1,33 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package wishserver;
 
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import Requests.ReceiveRequests;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-/**
- *
- * @author Windo
- */
-public class WishServer {
+public class WishServer extends Application {
 
-    ServerSocket serverSocket;
-    public WishServer() throws IOException {
-        serverSocket = new ServerSocket(5555);
-        while(true){
-            Socket s = serverSocket.accept();
-            new ReceiveRequests(s);
-        }
+    @Override
+    public void start(Stage stage) throws IOException {
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/AdminView.fxml"));
+        Parent root = loader.load();
+
+       
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("WishServer - Admin View");
+        stage.show();
     }
-    
-    
-    public static void main(String[] args) throws IOException {
-        new WishServer();
+
+    public static void main(String[] args) {
+        launch(args); 
     }
-    
 }
