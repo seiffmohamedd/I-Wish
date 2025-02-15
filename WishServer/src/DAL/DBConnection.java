@@ -29,16 +29,4 @@ public class DBConnection {
         con = DriverManager.getConnection("jdbc:oracle:thin:@"+ip+ ":" + port + ":"  + serviceID , dbSchema , schemaPassword);
         return con;
     }
-    
-   
-    
-    
-    /*public static void main(String[] args) {
-        try {
-            Connection c = new DBConnection().getConection();
-            System.out.println("Connection done : "+ c);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
 }

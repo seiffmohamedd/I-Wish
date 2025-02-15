@@ -6,23 +6,32 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddFriendController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #00B293;" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddFriendController">
    <children>
-      <TableView fx:id="searchResultsTable" layoutX="98.0" layoutY="103.0" prefHeight="331.0" prefWidth="800.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0">
-        <columns>
-          <TableColumn fx:id="usernameColumn" prefWidth="223.0" style="-fx-background-color: #00B293;" text="Username" />
-          <TableColumn fx:id="actionColumn" minWidth="0.0" prefWidth="564.0" style="-fx-background-color: #00B293;" text="Add Friend" />
-        </columns>
-      </TableView>
-      <Button fx:id="backButton" layoutX="349.0" layoutY="450.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #00B293; -fx-background-radius: 20;" text="Back" />
-      <TextField fx:id="searchField" layoutX="126.0" layoutY="48.0" prefHeight="25.0" prefWidth="526.0" style="-fx-background-radius: 20; -fx-border-color: #00B293; -fx-border-radius: 20;" text="Enter Username " />
-      <Button fx:id="searchButton" layoutX="671.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: #00B293; -fx-background-radius: 20;" text="Search" />
-      <Label layoutX="24.0" layoutY="51.0" prefHeight="19.0" prefWidth="97.0" text="Search Friend" textFill="#00b293">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
+      <HBox layoutX="70.0" layoutY="103.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="70.0">
+         <children>
+            <TableView fx:id="searchResultsTable" prefHeight="331.0" prefWidth="800.0">
+              <columns>
+                <TableColumn fx:id="usernameColumn" prefWidth="223.0" style="-fx-background-color: #ffffff;" text="Username" />
+                <TableColumn fx:id="actionColumn" minWidth="0.0" prefWidth="564.0" style="-fx-background-color: #ffffff;" text="Add Friend" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <Button fx:id="backButton" layoutX="349.0" layoutY="450.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="112.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20;" text="Back" textFill="#00b293" />
+      <HBox layoutX="24.0" layoutY="48.0">
+         <children>
+            <Label prefHeight="19.0" prefWidth="97.0" text="Search Friend" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="searchField" prefHeight="25.0" prefWidth="526.0" style="-fx-background-radius: 20; -fx-border-color: #00B293; -fx-border-radius: 20;" />
+            <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="25.0" prefWidth="97.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20;" text="Search" textFill="#00b293" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

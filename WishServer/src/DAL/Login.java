@@ -5,7 +5,7 @@
  */
 package DAL;
 import DBO.User;
-import Requests.SendRespond;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -22,7 +22,7 @@ public class Login {
     private User user;
     private Connection DBCon;
     private String ifUserExistsQuery = "SELECT * FROM PERSON WHERE USERNAME = ? and PASSWORD = ?";
-    private SendRespond respond;
+    
     private int executeResult;
     public Login(User user) throws SQLException, ParseException{
         this.user = user;

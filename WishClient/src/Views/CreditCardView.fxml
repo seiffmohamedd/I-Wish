@@ -7,19 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.CreditCardViewController">
    <children>
       <Label layoutX="156.0" layoutY="56.0" text="Current Points" textFill="#00b293">
          <font>
             <Font name="System Bold" size="12.0" />
-         </font></Label>
-      <TextField fx:id="currentPointsTxfield" editable="false" layoutX="156.0" layoutY="81.0" prefHeight="27.0" prefWidth="108.0" promptText="Current points" style="-fx-border-color: #00B293; -fx-border-radius: 20; -fx-background-radius: 20;" />
-     <TextField fx:id="CreditCardNumTxtfield" layoutX="156.0" layoutY="153.0" prefHeight="25.0" prefWidth="448.0" style="-fx-border-color: #00B293;" text="xxxxxxxx" />
+         </font>
+      </Label>
+      <TextField fx:id="currentPointsTxfield" editable="false" layoutX="156.0" layoutY="81.0" prefHeight="27.0" prefWidth="108.0" style="-fx-border-color: #00B293; -fx-border-radius: 20; -fx-background-radius: 20;" />
+     <TextField fx:id="CreditCardNumTxtfield" layoutX="156.0" layoutY="153.0" prefHeight="25.0" prefWidth="448.0" style="-fx-border-color: #00B293;" />
 
-      <DatePicker fx:id="ValidtoDataField" layoutX="156.0" layoutY="213.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #00B293;" />
-      <TextField fx:id="HolderNameTxtField" layoutX="156.0" layoutY="290.0" prefHeight="25.0" prefWidth="448.0" style="-fx-border-radius: #00B293; -fx-border-color: #00b293;" text="Add your full name " />
-      <TextField fx:id="CVVTxtField" alignment="CENTER" layoutX="386.0" layoutY="213.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #00B293;" text="xxxx" />
-      <TextField fx:id="numberOfPointsToChargeTxtField" layoutX="462.0" layoutY="364.0" prefHeight="27.0" prefWidth="149.0" style="-fx-border-color: #00B293; -fx-background-radius: 20; -fx-border-radius: 20;" text="Total Points" />
+            <DatePicker fx:id="ValidtoDataField" layoutX="156.0" layoutY="213.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #00B293;" />
+      <TextField fx:id="HolderNameTxtField" layoutX="156.0" layoutY="290.0" prefHeight="25.0" prefWidth="448.0" style="-fx-border-radius: #00B293; -fx-border-color: #00b293;" />
+      <TextField fx:id="CVVTxtField" alignment="CENTER" layoutX="386.0" layoutY="213.0" prefHeight="25.0" prefWidth="220.0" style="-fx-border-color: #00B293;" />
+      <TextField fx:id="numberOfPointsToChargeTxtField" layoutX="462.0" layoutY="364.0" prefHeight="27.0" prefWidth="149.0" style="-fx-border-color: #00B293; -fx-background-radius: 20; -fx-border-radius: 20;" />
       <Button layoutX="151.0" layoutY="423.0" mnemonicParsing="false" onAction="#backBtnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #00b293; -fx-background-radius: 20;" text="Back" />
       <Button layoutX="415.0" layoutY="423.0" mnemonicParsing="false" onAction="#ConfirmbtnAction" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #00b293; -fx-background-radius: 20;" text="Confirm" />
       <Label layoutX="156.0" layoutY="127.0" text="Card Number" textFill="#00b293">

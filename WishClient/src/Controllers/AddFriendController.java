@@ -70,24 +70,6 @@ public class AddFriendController implements Initializable {
             }
         }
     }
-
-//    private void updateSearchResultsFromString(String data) {
-//         searchResults.clear();  
-//         try {
-//             JSONArray userArray = new JSONArray(data);
-//             for (int i = 0; i < userArray.length(); i++) {
-//                 String username = userArray.getString(i).trim();
-//
-//                 if (!username.isEmpty()) {
-//                     User user = new User(username);  
-//                     searchResults.add(user);
-//                 }
-//             }
-//         } catch (JSONException ex) {
-//             Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
-//         }
-//     }    
-   
     
      @FXML
     private void handleBackButton(ActionEvent event) {
@@ -135,9 +117,10 @@ public class AddFriendController implements Initializable {
                     Button addButton = new Button("Add");
                     String finalUsername = username;
                     addButton.setOnAction(event -> sendFriendRequestToServer(finalUsername));
-
+                            
                     User user = new User(finalUsername, addButton);
                     freshList.add(user);
+                    
                 }
             }
 
@@ -174,6 +157,9 @@ public class AddFriendController implements Initializable {
             
             if ("Success".equalsIgnoreCase(response)) {
             new Dialog().showDialog("Friend Request", "Friend request sent to " + friendUsername + "!", "INFORMATION");
+             // Remove user from the table after sending the request
+            searchResults.removeIf(user -> user.getInstanceUserName().equals(friendUsername));
+            searchResultsTable.refresh();
         } else {
             new Dialog().showDialog("Friend Request Failed", "Could not send friend request. Try again later.", "ERROR");
         }
@@ -182,19 +168,4 @@ public class AddFriendController implements Initializable {
         }
     }
 
-//    @FXML
-//    private void handleBackButton() {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/ProfileView.fxml"));
-//            Scene profileViewScene = new Scene(loader.load());
-//            Stage stage = (Stage) backButton.getScene().getWindow();
-//            stage.setScene(profileViewScene);
-//            stage.show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//}
 }
-
-//THIS WORKSSSSSSSSSSSSSSSSSSSSSSSSSS YSEIFFF
-//FINALLLLLL

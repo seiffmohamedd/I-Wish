@@ -2,16 +2,27 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Views.SignUpViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SignUpViewController">
    <children>
       <Label layoutX="89.0" layoutY="209.0" text="FirstName" textFill="#00b293" />
-      <Label layoutX="89.0" layoutY="153.0" text="ID" textFill="#00b293" />
-      <TextField fx:id="Fname" layoutX="89.0" layoutY="235.0" prefHeight="25.0" prefWidth="294.0" style="-fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Enter your first name " />
+      <Label layoutX="89.0" layoutY="153.0" text="UserName" textFill="#00b293" />
+      <TextField fx:id="ID" layoutX="89.0" layoutY="177.0" prefHeight="25.0" prefWidth="294.0" promptText="Enter Your user Name" style="-fx-border-color: #00b293;" />
+      <TextField fx:id="Fname" layoutX="89.0" layoutY="235.0" prefHeight="25.0" prefWidth="294.0" promptText="Enter your first name " style="-fx-border-color: #00b293;" />
+      <TextField fx:id="Lname" layoutX="409.0" layoutY="235.0" prefHeight="25.0" prefWidth="294.0" promptText="Enter your last name " style="-fx-border-color: #00b293;" />
+      <TextField fx:id="gender" layoutX="89.0" layoutY="286.0" prefHeight="25.0" prefWidth="294.0" promptText="Enter your gender" style="-fx-border-color: #00b293;" />
+      <DatePicker fx:id="birthDate" layoutX="410.0" layoutY="287.0" prefHeight="27.0" prefWidth="294.0" promptText="Enter your birth date" style="-fx-border-color: #00B293;" />
+      <PasswordField fx:id="password" layoutX="88.0" layoutY="339.0" prefHeight="25.0" prefWidth="294.0" promptText="Create a strong password" style="-fx-border-color: #00B293;" />
+      <TextField fx:id="phone" layoutX="409.0" layoutY="338.0" prefHeight="25.0" prefWidth="294.0" promptText="Enter your phone number " style="-fx-border-color: #00b293; -fx-border-radius: ;" />
+      <CheckBox layoutX="89.0" layoutY="399.0" mnemonicParsing="false" text="I agree to all Term, Privacy Policy and Fees." />
+      <Button layoutX="456.0" layoutY="445.0" mnemonicParsing="false" onAction="#SignupAction" prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: #00b293; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #00b293;" text="Sign up" />
+      <Button layoutX="129.0" layoutY="445.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: #00b293; -fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Back" />
       <Label layoutX="62.0" layoutY="22.0" prefHeight="51.0" prefWidth="130.0" text="I  Wish" textFill="#00b293">
          <font>
             <Font name="Californian FB Bold" size="25.0" />
@@ -27,19 +38,10 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="ID" layoutX="89.0" layoutY="177.0" prefHeight="25.0" prefWidth="294.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #00b293;" text="Enter Your ID" />
       <Label layoutX="409.0" layoutY="209.0" text="LastName" textFill="#00b293" />
-      <TextField fx:id="Lname" layoutX="409.0" layoutY="235.0" prefHeight="25.0" prefWidth="294.0" style="-fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Enter your last name " />
-      <Button layoutX="129.0" layoutY="445.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: #00b293; -fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Back" />
-      <Button layoutX="456.0" layoutY="445.0" mnemonicParsing="false" onAction="#SignupAction" prefHeight="25.0" prefWidth="216.0" style="-fx-background-color: #00b293; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #00b293;" text="Sign up" />
       <Label layoutX="89.0" layoutY="264.0" text="Gender " textFill="#00b293" />
-      <TextField fx:id="gender" layoutX="89.0" layoutY="286.0" prefHeight="25.0" prefWidth="294.0" style="-fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Enter your gender" />
       <Label layoutX="409.0" layoutY="264.0" text="Birth Date" textFill="#00b293" />
-      <TextField fx:id="birthDate" layoutX="409.0" layoutY="286.0" prefHeight="25.0" prefWidth="294.0" style="-fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Enter your birth date" />
       <Label layoutX="409.0" layoutY="317.0" text="Phone" textFill="#00b293" />
-      <TextField fx:id="password" layoutX="89.0" layoutY="338.0" prefHeight="25.0" prefWidth="294.0" style="-fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Create  a strong password" />
       <Label layoutX="88.0" layoutY="317.0" text="Pasword" textFill="#00b293" />
-      <TextField fx:id="phone" layoutX="409.0" layoutY="338.0" prefHeight="25.0" prefWidth="294.0" style="-fx-background-radius: 20; -fx-border-color: #00b293; -fx-border-radius: 20;" text="Enter your phone number " />
-      <CheckBox layoutX="89.0" layoutY="399.0" mnemonicParsing="false" text="I agree to all Term, Privacy Policy and Fees." />
    </children>
 </AnchorPane>

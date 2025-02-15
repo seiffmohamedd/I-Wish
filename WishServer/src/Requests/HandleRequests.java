@@ -188,10 +188,10 @@ public class HandleRequests {
 
                 switch (friendsListHandler.getExecuteResult()) {
                     case 1:
-                        HandlingResult = "Friend request sent!";
+                        HandlingResult = "Success";
                         break;
                     case 0:
-                        HandlingResult = "Error sending friend request.";
+                        HandlingResult = "Fail";
                         break;
                 }
                 break;
