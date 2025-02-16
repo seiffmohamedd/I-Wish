@@ -85,6 +85,8 @@ public class LoginViewController implements Initializable {
             }else{ 
                 dg.showDialog("Login","Failed to Login user data is wrong","ERROR");
             }
+            usernameField.clear();
+            passwordField.clear();
             
         } catch (java.net.ConnectException ex) {
         new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
