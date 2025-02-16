@@ -11,93 +11,90 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import wishserver.WishServer;
 
 public class AdminViewController extends Thread {
 
     private Thread serverThread;
-    private boolean isServerRunning;
+    private boolean isServerRunning = false;
     private ServerSocket serverSocket;
-    private WishServer server;
 
     @FXML
     private Button startButton;
 
     @FXML
     private Button stopButton;
-    Dialog dg = new Dialog();
-    @FXML
-    private Button startButton1;
     
+    Dialog dg = new Dialog();
+
     @FXML
     public void startServer() {
         if (!isServerRunning) {
             try {
                 serverSocket = new ServerSocket(5555);
                 isServerRunning = true;
-//                System.out.println("✅ Server is running...");
-                  dg.showDialog("Server status", "Server is running sucessfully", "CONFIRMATION");
-                start();
+                dg.showDialog("Server Status", "Server is running successfully", "CONFIRMATION");
 
+                // Start the server thread
+                serverThread = new Thread(() -> {
+                    while (isServerRunning) {
+                        try {
+                            Socket s = serverSocket.accept();
+                            new ReceiveRequests(s);
+                        } catch (IOException ex) {
+                            if (isServerRunning) { // Only log error if the server was running
+                                Logger.getLogger(WishServer.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                });
+
+                serverThread.start();
             } catch (IOException e) {
                 Logger.getLogger(WishServer.class.getName()).log(Level.SEVERE, null, e);
-                dg.showDialog("Server status", "Server Can not start", "ERROR");
+                dg.showDialog("Server Status", "Server cannot start", "ERROR");
             }
         } else {
-           
-            dg.showDialog("Server status", "Server is Already running", "CONFIRMATION");
+            dg.showDialog("Server Status", "Server is already running", "INFORMATION");
         }
     }
 
     @FXML
     public void stopServer() {
         if (isServerRunning) {
-            stop();
-            isServerRunning = false;
-            dg.showDialog("Server status", "Server is Stop Sucessfully", "CONFIRMATION");
+            isServerRunning = false; // Stop the server loop
+
             try {
-                serverSocket.close();
+                if (serverSocket != null && !serverSocket.isClosed()) {
+                    serverSocket.close(); // Close the server socket
+                }
+
+                if (serverThread != null && serverThread.isAlive()) {
+                    serverThread.interrupt(); // Stop the thread
+                    serverThread = null; // Reset the thread
+                }
+
+                dg.showDialog("Server Status", "Server stopped successfully", "CONFIRMATION");
             } catch (IOException ex) {
                 Logger.getLogger(AdminViewController.class.getName()).log(Level.SEVERE, null, ex);
+                dg.showDialog("Server Status", "Error while stopping the server", "ERROR");
             }
-            
-        }else{
-            dg.showDialog("Server status", "Server is Already Stop", "CONFIRMATION");
+        } else {
+            dg.showDialog("Server Status", "Server is already stopped", "INFORMATION");
         }
     }
-
-    public boolean isIsServerRunning() {
-        return isServerRunning;
-    }
-
-    // serverThread  = new Thread(new Runnable() {
-    public void run() {
-        while (true) {
-            try {
-                Socket s = serverSocket.accept();
-                new ReceiveRequests(s);
-            } catch (IOException ex) {
-                Logger.getLogger(WishServer.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-    // });
 
     public void initialize(URL url, ResourceBundle rb) {
-
+        // No specific initialization needed
     }
 
     @FXML
     private void executeQueryAction(ActionEvent event) {
         try {
-            new LoadView(event, "ExcuteQuery");
+            new LoadView(event, "ExecuteQuery");
         } catch (IOException ex) {
             Logger.getLogger(AdminViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

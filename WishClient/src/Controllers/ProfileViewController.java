@@ -105,7 +105,9 @@ public class ProfileViewController implements Initializable {
             System.out.println("the points for the user " + User.getUserName() + " is " + User.getPoints());
             points.setText(String.valueOf(User.getPoints()));
             
-        } catch (IOException ex) {
+        } catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    }catch (IOException ex) {
             Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JSONException ex) {
                 Logger.getLogger(ProfileViewController.class.getName()).log(Level.SEVERE, null, ex);

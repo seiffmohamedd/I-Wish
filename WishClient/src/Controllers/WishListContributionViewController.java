@@ -103,7 +103,9 @@ public class WishListContributionViewController implements Initializable {
                 return;
             }
             updateTableFrom(new JSONArray(respond));
-        } catch (JSONException | IOException ex) {
+        } catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    }catch (JSONException | IOException ex) {
             Logger.getLogger(WishListContributionViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

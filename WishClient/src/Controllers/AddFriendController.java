@@ -65,9 +65,12 @@ public class AddFriendController implements Initializable {
 
                 
                 updateSearchResultsFromString(data);
-            } catch (IOException | JSONException ex) {
+            } catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    }   catch (IOException | JSONException ex) {
                 Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
     }
     
@@ -163,7 +166,9 @@ public class AddFriendController implements Initializable {
         } else {
             new Dialog().showDialog("Friend Request Failed", "Could not send friend request. Try again later.", "ERROR");
         }
-        } catch (IOException | JSONException ex) {
+        }catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    } catch (IOException | JSONException ex) {
             Logger.getLogger(AddFriendController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

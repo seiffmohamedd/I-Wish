@@ -75,7 +75,9 @@ public class SignUpViewController implements Initializable {
             } else {
                 dg.showDialog("SignUp", "Failed to insert user data", "ERROR");
             }
-        } catch (IOException ex) {
+        } catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    }catch (IOException ex) {
             dg.showDialog("Server Connection", "Cannot connect to server", "ERROR");
         }
     }

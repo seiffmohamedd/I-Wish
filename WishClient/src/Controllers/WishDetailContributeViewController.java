@@ -104,7 +104,9 @@ public class WishDetailContributeViewController implements Initializable {
             }
             socket.closeStreams();
 
-        } catch (IOException | JSONException ex) {
+        } catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    }catch (IOException | JSONException ex) {
             Logger.getLogger(WishDetailContributeViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
        

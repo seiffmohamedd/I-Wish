@@ -70,7 +70,9 @@ public class FriendRequestController implements Initializable {
             }
 
             socket.closeStreams();
-        } catch (JSONException | IOException ex) {
+        }catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    } catch (JSONException | IOException ex) {
             Logger.getLogger(FriendRequestController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -146,7 +148,9 @@ public class FriendRequestController implements Initializable {
         } else {
             dg.showDialog("Error", "Failed to update friend request!", "ERROR");
         }
-    } catch (IOException | JSONException ex) {
+    } catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    }catch (IOException | JSONException ex) {
         Logger.getLogger(FriendRequestController.class.getName()).log(Level.SEVERE, null, ex);
     }
  }

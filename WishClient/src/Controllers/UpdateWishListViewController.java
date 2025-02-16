@@ -132,7 +132,9 @@ public class UpdateWishListViewController implements Initializable {
 
           
             socket.closeStreams();
-        } catch (JSONException | IOException ex) {
+        } catch (java.net.ConnectException ex) {
+        new Dialog().showDialog("Connection Error", "Failed to connect to the server. Please try again later.", "ERROR");
+    }catch (JSONException | IOException ex) {
             Logger.getLogger(UpdateWishListViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
